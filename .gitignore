@@ -5,3 +5,4 @@ trades/
 replit.md
 automated_trader.log
 __pycache__/
+.env
