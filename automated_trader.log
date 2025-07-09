@@ -67,3 +67,4 @@
 2025-07-10 01:48:44,478 - INFO - Executed automated trade: LTCUSDT | P&L: $0.5777
 2025-07-10 01:48:49,480 - INFO - Automation cycle completed. Next cycle in 300 seconds
 2025-07-10 01:51:49,501 - INFO - Starting automated signal generation cycle
+2025-07-10 01:52:14,881 - INFO - Database tables created successfully
