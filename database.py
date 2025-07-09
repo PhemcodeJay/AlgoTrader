@@ -2,13 +2,13 @@ import os
 import logging
 from datetime import datetime, timezone
 from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, Boolean, Text, JSON
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 import json
 
 # Database configuration
-DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://user:password@localhost/Algotrader')
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://user:1234@localhost:5431/Algotrader')
 
 # SQLAlchemy setup
 engine = create_engine(
