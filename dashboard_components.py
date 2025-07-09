@@ -310,22 +310,22 @@ class DashboardComponents:
         
         return fig
     
-def display_market_overview(self, market_data):
-    """Display market overview with key metrics"""
-    col1, col2, col3, col4 = st.columns(4)
+    def display_market_overview(self, market_data):
+        """Display market overview with key metrics"""
+        col1, col2, col3, col4 = st.columns(4)
 
-    for i, data in enumerate(market_data):
-        symbol = data.get('symbol', 'N/A')
-        col = [col1, col2, col3, col4][i % 4]
+        for i, data in enumerate(market_data):
+            symbol = data.get('symbol', 'N/A')
+            col = [col1, col2, col3, col4][i % 4]
 
-        with col:
-            price_change = data.get('price_change_pct', 0)
-            color = get_trend_color(price_change)
+            with col:
+                price_change = data.get('price_change_pct', 0)
+                color = get_trend_color(price_change)
 
-            st.markdown(f"""
-            <div style='border: 1px solid #444; border-radius: 10px; padding: 10px; margin: 5px;'>
-                <h4 style='margin: 0; color: white;'>{symbol}</h4>
-                <p style='margin: 5px 0; font-size: 20px; color: white;'>${data.get('price', 'N/A')}</p>
-                <p style='margin: 0; color: {color};'>{format_percentage(price_change)}%</p>
-            </div>
-            """, unsafe_allow_html=True)
+                st.markdown(f"""
+                <div style='border: 1px solid #444; border-radius: 10px; padding: 10px; margin: 5px;'>
+                    <h4 style='margin: 0; color: white;'>{symbol}</h4>
+                    <p style='margin: 5px 0; font-size: 20px; color: white;'>${data.get('price', 'N/A')}</p>
+                    <p style='margin: 0; color: {color};'>{format_percentage(price_change)}%</p>
+                </div>
+                """, unsafe_allow_html=True)
