@@ -8,7 +8,7 @@ from sqlalchemy.pool import StaticPool
 import json
 
 # Database configuration
-DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://user:1234@localhost:5431/Algotrader')
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://user:1234@localhost:5432/Algotrader')
 
 # SQLAlchemy setup
 engine = create_engine(
