@@ -16,7 +16,7 @@ from database import db_manager
 
 # Configure page
 st.set_page_config(
-    page_title="CryptoPilot Dashboard",
+    page_title="AlgoTrader Dashboard",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -33,7 +33,7 @@ def init_components():
 trading_engine, dashboard, data_provider = init_components()
 
 # Sidebar Navigation
-st.sidebar.title("🚀 CryptoPilot")
+st.sidebar.title("🚀 AlgoTrader")
 st.sidebar.markdown("---")
 
 page = st.sidebar.selectbox(
@@ -84,7 +84,7 @@ except:
 
 # Main Content Area
 if page == "🏠 Dashboard":
-    st.title("🚀 CryptoPilot Trading Dashboard")
+    st.title("🚀 AlgoTrader Trading Dashboard")
     
     # Key Metrics Row
     col1, col2, col3, col4 = st.columns(4)
@@ -302,26 +302,37 @@ elif page == "📈 Charts":
         with col3:
             indicators = st.multiselect(
                 "Indicators",
-                ["EMA 9", "EMA 21", "SMA 20", "SMA 200", "Bollinger Bands", "RSI", "MACD"],
-                default=["EMA 9", "EMA 21", "RSI"]
+                [
+                    "EMA 9", 
+                    "EMA 21", 
+                    "MA 50", 
+                    "MA 200", 
+                    "Bollinger Bands", 
+                    "RSI", 
+                    "MACD", 
+                    "Stoch RSI", 
+                    "Volume"
+                ],
+                default=["Bollinger Bands", "MA 200", "RSI","Volume"]
             )
+
+    
+    # Fetch and display chart
+    with st.spinner("Loading chart data..."):
+        chart_data = data_provider.get_chart_data(selected_symbol, timeframe, limit)
         
-        # Fetch and display chart
-        with st.spinner("Loading chart data..."):
-            chart_data = data_provider.get_chart_data(selected_symbol, timeframe, limit)
+        if chart_data:
+            chart = dashboard.create_technical_chart(chart_data, selected_symbol, indicators)
+            st.plotly_chart(chart, use_container_width=True)
             
-            if chart_data:
-                chart = dashboard.create_technical_chart(chart_data, selected_symbol, indicators)
-                st.plotly_chart(chart, use_container_width=True)
-                
-                # Current signal for this symbol
-                current_signals = [s for s in trading_engine.get_recent_signals() if s['symbol'] == selected_symbol]
-                if current_signals:
-                    st.subheader(f"🎯 Current Signals for {selected_symbol}")
-                    for signal in current_signals:
-                        dashboard.display_signal_card(signal)
-            else:
-                st.error(f"Failed to load data for {selected_symbol}")
+            # Current signal for this symbol
+            current_signals = [s for s in trading_engine.get_recent_signals() if s['symbol'] == selected_symbol]
+            if current_signals:
+                st.subheader(f"🎯 Current Signals for {selected_symbol}")
+                for signal in current_signals:
+                    dashboard.display_signal_card(signal)
+        else:
+            st.error(f"Failed to load data for {selected_symbol}")
 
 elif page == "🤖 Automation":
     st.title("🤖 Automated Trading")
