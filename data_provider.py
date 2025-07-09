@@ -22,7 +22,7 @@ class DataProvider:
             print(f"[DataProvider] Error fetching popular symbols: {e}")
             return []
 
-    def get_market_overview(self, limit: int = 12) -> List[Dict]:
+    def get_market_overview(self, limit: int = 10) -> List[Dict]:
         """
         Fetch 24h summary for top USDT symbols.
         """
@@ -69,7 +69,7 @@ class DataProvider:
             formatted = []
             for entry in raw_data:
                 formatted.append({
-                    "timestamp": datetime.utcfromtimestamp(entry[0] / 1000),
+                    "timestamp": datetime.utc(entry[0] / 1000),
                     "open": float(entry[1]),
                     "high": float(entry[2]),
                     "low": float(entry[3]),

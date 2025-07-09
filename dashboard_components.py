@@ -145,21 +145,41 @@ class DashboardComponents:
 
         fig.update_layout(template="plotly_dark", height=800, xaxis_rangeslider_visible=False)
         return fig
-
+    
     def display_market_overview(self, market_data):
-        for i in range(0, len(market_data), 4):
-            cols = st.columns(4)
-            for j, data in enumerate(market_data[i:i+4]):
-                with cols[j]:
-                    symbol = data.get('symbol', 'N/A')
-                    price = data.get('price', 'N/A')
-                    price_change = data.get('price_change_pct', 0)
-                    color = get_trend_color(price_change)
+    st.markdown("### 🌍 Market Overview")
 
-                    st.markdown(f"""
-                    <div style='border: 1px solid #444; border-radius: 10px; padding: 10px; margin: 5px;'>
-                        <h4 style='margin: 0; color: white;'>{symbol}</h4>
-                        <p style='margin: 5px 0; font-size: 20px; color: white;'>${price}</p>
-                        <p style='margin: 0; color: {color};'>{format_percentage(price_change)}%</p>
-                    </div>
-                    """, unsafe_allow_html=True)
+    for i in range(0, len(market_data), 4):
+        cols = st.columns(4)
+
+        for j in range(4):
+            if i + j < len(market_data):
+                data = market_data[i + j]
+                symbol = data.get('symbol', 'N/A')
+                price_raw = data.get('price', 'N/A')
+                price_change = data.get('price_change_pct', 0.0)
+                color = get_trend_color(price_change)
+
+                # Format price for readability
+                try:
+                    price_float = float(price_raw)
+                    if price_float < 1:
+                        price = f"{price_float:.8f}"
+                    elif price_float < 100:
+                        price = f"{price_float:.4f}"
+                    else:
+                        price = f"{price_float:,.2f}"
+                except Exception:
+                    price = str(price_raw)
+
+                with cols[j]:
+                    st.markdown(
+                        f"""
+                        <div style='border: 1px solid #444; border-radius: 10px; padding: 10px; margin: 8px 0; background-color: #111; text-align: center;'>
+                            <h4 style='margin: 0; color: white;'>{symbol}</h4>
+                            <p style='margin: 5px 0; font-size: 20px; color: white;'>${price}</p>
+                            <p style='margin: 0; color: {color};'>{format_percentage(price_change)}%</p>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )

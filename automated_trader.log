@@ -68,3 +68,216 @@
 2025-07-10 01:48:49,480 - INFO - Automation cycle completed. Next cycle in 300 seconds
 2025-07-10 01:51:49,501 - INFO - Starting automated signal generation cycle
 2025-07-10 01:52:14,881 - INFO - Database tables created successfully
+2025-07-10 01:53:12,234 - INFO - Automation settings loaded successfully
+2025-07-10 01:53:12,236 - INFO - Starting automated signal generation cycle
+2025-07-10 01:53:12,236 - INFO - Automated trading started
+2025-07-10 01:53:20,127 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 01:53:20,137 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 01:53:20,144 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 01:53:20,154 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 01:53:20,161 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 01:53:20,164 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 01:53:20,167 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 01:53:20,170 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 01:53:20,173 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 01:53:20,199 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 01:53:20,202 - INFO - Generated 5 automated signals
+2025-07-10 01:53:20,216 - INFO - Portfolio balance updated to $12.1383
+2025-07-10 01:53:20,219 - INFO - Trade added: BTCUSDT - P&L: $0.0
+2025-07-10 01:53:22,030 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:53:22,031 - INFO - Executed automated trade: BTCUSDT | P&L: $0.0
+2025-07-10 01:53:27,085 - INFO - Portfolio balance updated to $12.7608
+2025-07-10 01:53:27,113 - INFO - Trade added: ETHUSDT - P&L: $0.6225
+2025-07-10 01:53:29,060 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:53:29,064 - INFO - Executed automated trade: ETHUSDT | P&L: $0.6225
+2025-07-10 01:53:34,090 - INFO - Portfolio balance updated to $13.4019
+2025-07-10 01:53:34,093 - INFO - Trade added: BCHUSDT - P&L: $0.6411
+2025-07-10 01:53:35,912 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:53:35,914 - INFO - Executed automated trade: BCHUSDT | P&L: $0.6411
+2025-07-10 01:53:40,994 - INFO - Portfolio balance updated to $14.072
+2025-07-10 01:53:41,065 - INFO - Trade added: XRPUSDT - P&L: $0.6701
+2025-07-10 01:53:43,345 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:53:43,346 - INFO - Executed automated trade: XRPUSDT | P&L: $0.6701
+2025-07-10 01:53:48,376 - INFO - Portfolio balance updated to $14.7764
+2025-07-10 01:53:48,384 - INFO - Trade added: LTCUSDT - P&L: $0.7044
+2025-07-10 01:53:49,948 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:53:49,949 - INFO - Executed automated trade: LTCUSDT | P&L: $0.7044
+2025-07-10 01:53:54,951 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 01:54:48,062 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 01:54:48,068 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 01:54:48,080 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 01:54:48,083 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 01:54:48,087 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 01:54:48,090 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 01:54:48,093 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 01:54:48,096 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 01:54:48,100 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 01:54:48,104 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 01:54:48,110 - INFO - Generated 5 automated signals
+2025-07-10 01:54:48,127 - INFO - Portfolio balance updated to $14.7764
+2025-07-10 01:54:48,138 - INFO - Trade added: BTCUSDT - P&L: $0.0
+2025-07-10 01:54:49,795 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:54:49,797 - INFO - Executed automated trade: BTCUSDT | P&L: $0.0
+2025-07-10 01:54:54,828 - INFO - Portfolio balance updated to $15.5363
+2025-07-10 01:54:54,834 - INFO - Trade added: ETHUSDT - P&L: $0.7599
+2025-07-10 01:54:56,357 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:54:56,359 - INFO - Executed automated trade: ETHUSDT | P&L: $0.7599
+2025-07-10 01:55:01,392 - INFO - Portfolio balance updated to $16.3187
+2025-07-10 01:55:01,400 - INFO - Trade added: BCHUSDT - P&L: $0.7824
+2025-07-10 01:55:03,477 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:55:03,478 - INFO - Executed automated trade: BCHUSDT | P&L: $0.7824
+2025-07-10 01:55:08,510 - INFO - Portfolio balance updated to $17.1347
+2025-07-10 01:55:08,517 - INFO - Trade added: XRPUSDT - P&L: $0.816
+2025-07-10 01:55:10,421 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:55:10,422 - INFO - Executed automated trade: XRPUSDT | P&L: $0.816
+2025-07-10 01:55:15,460 - INFO - Portfolio balance updated to $17.991
+2025-07-10 01:55:15,467 - INFO - Trade added: LTCUSDT - P&L: $0.8563
+2025-07-10 01:55:17,154 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:55:17,155 - INFO - Executed automated trade: LTCUSDT | P&L: $0.8563
+2025-07-10 01:55:22,157 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 01:56:54,978 - INFO - Starting automated signal generation cycle
+2025-07-10 01:57:11,266 - INFO - Automation settings saved successfully
+2025-07-10 01:57:11,266 - INFO - Automation settings updated successfully
+2025-07-10 01:58:22,161 - INFO - Starting automated signal generation cycle
+2025-07-10 01:58:25,675 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 01:58:25,680 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 01:58:25,684 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 01:58:25,688 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 01:58:25,692 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 01:58:25,696 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 01:58:25,700 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 01:58:25,705 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 01:58:25,711 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 01:58:25,715 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 01:58:25,718 - INFO - Generated 5 automated signals
+2025-07-10 01:58:25,733 - INFO - Portfolio balance updated to $17.991
+2025-07-10 01:58:25,737 - INFO - Trade added: BTCUSDT - P&L: $0.0
+2025-07-10 01:58:27,182 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:58:27,184 - INFO - Executed automated trade: BTCUSDT | P&L: $0.0
+2025-07-10 01:58:32,201 - INFO - Portfolio balance updated to $18.8947
+2025-07-10 01:58:32,204 - INFO - Trade added: ETHUSDT - P&L: $0.9037
+2025-07-10 01:58:33,785 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:58:33,786 - INFO - Executed automated trade: ETHUSDT | P&L: $0.9037
+2025-07-10 01:58:38,817 - INFO - Portfolio balance updated to $19.8449
+2025-07-10 01:58:38,824 - INFO - Trade added: BCHUSDT - P&L: $0.9502
+2025-07-10 01:58:40,299 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:58:40,301 - INFO - Executed automated trade: BCHUSDT | P&L: $0.9502
+2025-07-10 01:58:45,340 - INFO - Portfolio balance updated to $20.8372
+2025-07-10 01:58:45,344 - INFO - Trade added: XRPUSDT - P&L: $0.9923
+2025-07-10 01:58:47,066 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:58:47,067 - INFO - Executed automated trade: XRPUSDT | P&L: $0.9923
+2025-07-10 01:58:52,100 - INFO - Portfolio balance updated to $21.8802
+2025-07-10 01:58:52,106 - INFO - Trade added: LTCUSDT - P&L: $1.043
+2025-07-10 01:58:53,618 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 01:58:53,619 - INFO - Executed automated trade: LTCUSDT | P&L: $1.043
+2025-07-10 01:58:58,620 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 01:59:50,779 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 01:59:50,789 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 01:59:50,796 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 01:59:50,803 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 01:59:50,810 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 01:59:50,819 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 01:59:50,827 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 01:59:50,836 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 01:59:50,845 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 01:59:50,849 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 01:59:50,852 - INFO - Generated 5 automated signals
+2025-07-10 01:59:50,860 - WARNING - Daily trades limit reached: 20
+2025-07-10 01:59:50,861 - INFO - Risk limits reached, stopping trade execution
+2025-07-10 01:59:50,861 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:00:31,981 - INFO - Database tables created successfully
+2025-07-10 02:01:58,855 - INFO - Starting automated signal generation cycle
+2025-07-10 02:01:58,960 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:01:58,961 - INFO - Trading paused due to risk limits
+2025-07-10 02:01:59,051 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:02:36,875 - INFO - Database tables created successfully
+2025-07-10 02:03:51,080 - INFO - Starting automated signal generation cycle
+2025-07-10 02:03:51,095 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:03:51,095 - INFO - Trading paused due to risk limits
+2025-07-10 02:03:51,096 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:04:19,610 - INFO - Database tables created successfully
+2025-07-10 02:06:16,519 - INFO - Database tables created successfully
+2025-07-10 02:06:59,208 - INFO - Starting automated signal generation cycle
+2025-07-10 02:06:59,256 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:06:59,257 - INFO - Trading paused due to risk limits
+2025-07-10 02:06:59,258 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:07:12,093 - INFO - Database tables created successfully
+2025-07-10 02:07:29,478 - INFO - Database tables created successfully
+2025-07-10 02:08:14,348 - INFO - Database tables created successfully
+2025-07-10 02:08:51,103 - INFO - Starting automated signal generation cycle
+2025-07-10 02:08:51,113 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:08:51,114 - INFO - Trading paused due to risk limits
+2025-07-10 02:08:51,114 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:11:59,505 - INFO - Starting automated signal generation cycle
+2025-07-10 02:11:59,526 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:11:59,527 - INFO - Trading paused due to risk limits
+2025-07-10 02:11:59,528 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:13:20,435 - INFO - Database tables created successfully
+2025-07-10 02:13:51,119 - INFO - Starting automated signal generation cycle
+2025-07-10 02:13:51,131 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:13:51,132 - INFO - Trading paused due to risk limits
+2025-07-10 02:13:51,133 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:16:59,710 - INFO - Starting automated signal generation cycle
+2025-07-10 02:16:59,737 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:16:59,737 - INFO - Trading paused due to risk limits
+2025-07-10 02:16:59,738 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:17:07,294 - INFO - Database tables created successfully
+2025-07-10 02:18:31,971 - INFO - Database tables created successfully
+2025-07-10 02:18:51,139 - INFO - Starting automated signal generation cycle
+2025-07-10 02:18:51,197 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:18:51,197 - INFO - Trading paused due to risk limits
+2025-07-10 02:18:51,198 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:21:59,826 - INFO - Starting automated signal generation cycle
+2025-07-10 02:21:59,837 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:21:59,837 - INFO - Trading paused due to risk limits
+2025-07-10 02:21:59,837 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:23:15,388 - INFO - Database tables created successfully
+2025-07-10 02:23:38,078 - INFO - Database tables created successfully
+2025-07-10 02:23:51,342 - INFO - Starting automated signal generation cycle
+2025-07-10 02:23:51,353 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:23:51,356 - INFO - Trading paused due to risk limits
+2025-07-10 02:23:51,357 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:24:45,293 - INFO - Database tables created successfully
+2025-07-10 02:25:17,748 - INFO - Database tables created successfully
+2025-07-10 02:25:35,623 - INFO - Database tables created successfully
+2025-07-10 02:26:59,888 - INFO - Starting automated signal generation cycle
+2025-07-10 02:26:59,909 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:26:59,910 - INFO - Trading paused due to risk limits
+2025-07-10 02:26:59,911 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:27:45,457 - INFO - Database tables created successfully
+2025-07-10 02:28:04,790 - INFO - Database tables created successfully
+2025-07-10 02:28:51,469 - INFO - Starting automated signal generation cycle
+2025-07-10 02:28:51,490 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:28:51,492 - INFO - Trading paused due to risk limits
+2025-07-10 02:28:51,493 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:28:58,983 - INFO - Database tables created successfully
+2025-07-10 02:30:36,817 - INFO - Database tables created successfully
+2025-07-10 02:30:55,177 - INFO - Database tables created successfully
+2025-07-10 02:31:13,706 - INFO - Automation settings loaded successfully
+2025-07-10 02:31:13,715 - INFO - Starting automated signal generation cycle
+2025-07-10 02:31:13,715 - INFO - Automated trading started
+2025-07-10 02:31:13,781 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:31:13,799 - INFO - Trading paused due to risk limits
+2025-07-10 02:31:13,800 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:31:59,923 - INFO - Starting automated signal generation cycle
+2025-07-10 02:31:59,943 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:31:59,944 - INFO - Trading paused due to risk limits
+2025-07-10 02:31:59,945 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:33:51,522 - INFO - Starting automated signal generation cycle
+2025-07-10 02:33:51,534 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:33:51,535 - INFO - Trading paused due to risk limits
+2025-07-10 02:33:51,535 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:34:04,497 - INFO - Database tables created successfully
+2025-07-10 02:34:29,326 - INFO - Database tables created successfully
+2025-07-10 02:36:13,919 - INFO - Starting automated signal generation cycle
+2025-07-10 02:36:13,933 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:36:13,934 - INFO - Trading paused due to risk limits
+2025-07-10 02:36:13,934 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:36:20,780 - INFO - Database tables created successfully
+2025-07-10 02:36:53,796 - INFO - Database tables created successfully
+2025-07-10 02:36:59,981 - INFO - Starting automated signal generation cycle
+2025-07-10 02:37:00,004 - WARNING - Daily trades limit reached: 20
+2025-07-10 02:37:00,004 - INFO - Trading paused due to risk limits
+2025-07-10 02:37:00,005 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 02:37:27,401 - INFO - Database tables created successfully
+2025-07-10 02:38:00,100 - INFO - Database tables created successfully

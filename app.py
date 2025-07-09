@@ -14,6 +14,41 @@ from data_provider import DataProvider
 from utils import format_currency, format_percentage, get_status_color
 from automated_trader import automated_trader
 from database import db_manager
+from data_provider import DataProvider
+
+
+# Helper functions
+def get_trend_color(change):
+    if change > 0:
+        return "lime"
+    elif change < 0:
+        return "red"
+    return "gray"
+
+def format_percentage(pct):
+    return f"{pct:.2f}"
+
+# Display function
+def display_market_overview(market_data):
+    for i in range(0, len(market_data), 4):
+        cols = st.columns(4)
+        for j, data in enumerate(market_data[i:i+4]):
+            with cols[j]:
+                symbol = data.get('symbol', 'N/A')
+                price = data.get('price', 'N/A')
+                price_change = data.get('price_change_pct', 0)
+                color = get_trend_color(price_change)
+
+                st.markdown(f"""
+                <div style='border: 1px solid #444; border-radius: 10px; padding: 10px; margin: 5px; background-color: #111;'>
+                    <h4 style='margin: 0; color: white;'>{symbol}</h4>
+                    <p style='margin: 5px 0; font-size: 20px; color: white;'>${price}</p>
+                    <p style='margin: 0; color: {color};'>{format_percentage(price_change)}%</p>
+                </div>
+                """, unsafe_allow_html=True)
+
+
+
 
 # Configure page
 st.set_page_config(
@@ -148,10 +183,13 @@ if page == "🏠 Dashboard":
             st.info("No trade history available")
     
     # Market Overview
-    st.subheader("🌍 Market Overview")
-    market_data = data_provider.get_market_overview()
-    if market_data:
-        dashboard.display_market_overview(market_data)
+        market_data = data_provider.get_market_overview(limit=10)
+        if market_data:
+            st.subheader("🌍 Market Overview")
+            display_market_overview(market_data)
+        else:
+            st.warning("No market data received!")
+
 
 elif page == "📊 Signals":
     st.title("📊 Trading Signals")
