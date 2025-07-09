@@ -1,0 +1,9 @@
+{
+  "signal_interval": 300,
+  "trade_execution": true,
+  "min_confidence": 75,
+  "max_signals": 5,
+  "max_daily_trades": 20,
+  "max_position_size": 5,
+  "max_drawdown": 20
+}
