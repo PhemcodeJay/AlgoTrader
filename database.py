@@ -6,9 +6,16 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 import json
+from dotenv import load_dotenv
+load_dotenv()
+
+user = os.getenv("DB_USER")
+password = os.getenv("DB_PASSWORD")
+
 
 # Database configuration
-DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://user:1234@localhost:5432/Algotrader')
+DATABASE_URL = os.getenv('DATABASE_URL')
+
 
 # SQLAlchemy setup
 engine = create_engine(
