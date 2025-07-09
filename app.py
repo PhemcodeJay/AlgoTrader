@@ -455,11 +455,13 @@ elif page == "🤖 Automation":
         
         max_drawdown = st.slider(
             "Max Drawdown Limit %",
-            min_value=5,
-            max_value=50,
-            value=float(automation_status['settings']['max_drawdown_limit']),
+            min_value=0.0,
+            max_value=100.0,
+            value=10.0,
+            step=0.1,
             help="Stop trading if drawdown exceeds this percentage"
         )
+
     
     # Save Settings Button
     if st.button("💾 Save Automation Settings", type="primary"):

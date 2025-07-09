@@ -10,15 +10,13 @@ class DataProvider:
 
     def get_popular_symbols(self, limit: int = 30) -> List[str]:
         """
-        Fetch top active trading pairs by volume (USDT pairs only).
+        Fetch top trading pairs by volume (USDT only).
         """
         try:
             response = self.session.get(f"{self.BASE_URL}/ticker/24hr")
             data = response.json()
-
             usdt_pairs = [item for item in data if item["symbol"].endswith("USDT")]
             sorted_pairs = sorted(usdt_pairs, key=lambda x: float(x["quoteVolume"]), reverse=True)
-
             return [pair["symbol"] for pair in sorted_pairs[:limit]]
         except Exception as e:
             print(f"[DataProvider] Error fetching popular symbols: {e}")
@@ -26,16 +24,15 @@ class DataProvider:
 
     def get_market_overview(self, limit: int = 12) -> List[Dict]:
         """
-        Returns market summary for top active symbols.
+        Fetch 24h summary for top USDT symbols.
         """
         try:
-            symbols = self.get_popular_symbols(limit=limit)
-            overview = []
-
+            symbols = self.get_popular_symbols(limit)
             response = self.session.get(f"{self.BASE_URL}/ticker/24hr")
             tickers = response.json()
             symbol_map = {item["symbol"]: item for item in tickers}
 
+            overview = []
             for sym in symbols:
                 item = symbol_map.get(sym)
                 if not item:
@@ -44,7 +41,7 @@ class DataProvider:
                 overview.append({
                     "symbol": sym,
                     "price": float(item["lastPrice"]),
-                    "change_percent": float(item["priceChangePercent"]),
+                    "price_change_pct": float(item["priceChangePercent"]),
                     "volume": float(item["quoteVolume"])
                 })
 
@@ -55,7 +52,8 @@ class DataProvider:
 
     def get_chart_data(self, symbol: str, interval: str = "1h", limit: int = 100) -> Optional[List[Dict]]:
         """
-        Fetch OHLCV data for a given symbol and interval.
+        Fetch OHLCV (candlestick) data for plotting technical indicators.
+        Output format matches requirements of DashboardComponents.create_technical_chart().
         """
         try:
             url = f"{self.BASE_URL}/klines"
@@ -68,9 +66,9 @@ class DataProvider:
             response = self.session.get(url, params=params)
             raw_data = response.json()
 
-            ohlcv = []
+            formatted = []
             for entry in raw_data:
-                ohlcv.append({
+                formatted.append({
                     "timestamp": datetime.utcfromtimestamp(entry[0] / 1000),
                     "open": float(entry[1]),
                     "high": float(entry[2]),
@@ -79,7 +77,7 @@ class DataProvider:
                     "volume": float(entry[5])
                 })
 
-            return ohlcv
+            return formatted
         except Exception as e:
             print(f"[DataProvider] Failed to get chart data for {symbol}: {e}")
             return None
