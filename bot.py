@@ -1,16 +1,12 @@
 # === Part 1: Config & Setup ===
-import os, json, requests
+import os, json, requests, logging
 from datetime import datetime, timedelta, timezone
 from fpdf import FPDF
 import praw  # Reddit
-import logging
+from dotenv import load_dotenv
 
-from data_provider import DataProvider
+load_dotenv()
 
-dp = DataProvider()
-
-
-# === CONFIG ===
 CAPITAL_FILE = "capital.json"
 TRADE_LOG_FILE = "trades_history.json"
 SIGNAL_DIR = "signals"
@@ -22,8 +18,6 @@ SL_PERCENT = 0.10
 LEVERAGE = 20
 RISK_AMOUNT = 2
 
-
-# === INDICATORS ===
 def ema(values, period):
     emas, k = [], 2 / (period + 1)
     ema_prev = sum(values[:period]) / period
@@ -72,27 +66,58 @@ def calculate_bollinger_bands(values, period=20, std_dev=2):
             bands.append((upper, mean, lower))
     return bands
 
-# === TREND ===
+def fetch_ohlcv(symbol, interval='1h', limit=100):
+    url = f"https://fapi.binance.com/fapi/v1/klines?symbol={symbol}&interval={interval}&limit={limit}"
+    try:
+        r = requests.get(url, timeout=5)
+        return [[float(x[0]), float(x[1]), float(x[2]), float(x[4]), float(x[5])] for x in r.json()]
+    except Exception as e:
+        print(f"[ERROR] {symbol}: {e}")
+        return []
+
+def get_symbols(limit=100):
+    try:
+        r = requests.get("https://fapi.binance.com/fapi/v1/exchangeInfo", timeout=5)
+        return [s['symbol'] for s in r.json()['symbols'] if s['contractType'] == 'PERPETUAL' and 'USDT' in s['symbol']][:limit]
+    except Exception as e:
+        print(f"[ERROR] Symbols: {e}")
+        return []
 def detect_market_trend(symbol):
     def fetch_closes(symbol, tf):
-        url = f"https://fapi.binance.com/fapi/v1/klines?symbol={symbol}&interval={tf}&limit=60"
+        url = f"https://fapi.binance.com/fapi/v1/klines?symbol={symbol}&interval={tf}&limit=250"
         try:
             r = requests.get(url, timeout=5)
-            return [float(x[4]) for x in r.json()]
-        except:
+            data = r.json()
+            return [float(x[4]) for x in data if len(x) > 4]
+        except Exception as e:
+            print(f"[ERROR] Failed to fetch {symbol} {tf} data: {e}")
             return []
 
     trend_info = {}
     for tf in ['1h', '4h', '15m']:
         closes = fetch_closes(symbol, tf)
-        if len(closes) < 50:
+        if len(closes) < 200:
             trend_info[tf] = 'neutral'
             continue
-        ema9 = ema(closes, 9)[-1]
-        ema21 = ema(closes, 21)[-1]
-        ma50 = sma(closes, 50)[-1]
-        ma200 = sma(closes, 200)[-1]
-        close = closes[-1]
+
+        ema9_vals = ema(closes, 9)
+        ema21_vals = ema(closes, 21)
+        ma50_vals = sma(closes, 50)
+        ma200_vals = sma(closes, 200)
+
+        try:
+            close = closes[-1]
+            ema9 = ema9_vals[-1]
+            ema21 = ema21_vals[-1]
+            ma50 = ma50_vals[-1]
+            ma200 = ma200_vals[-1]
+        except (IndexError, TypeError):
+            trend_info[tf] = 'neutral'
+            continue
+
+        if None in [close, ema9, ema21, ma50, ma200]:
+            trend_info[tf] = 'neutral'
+            continue
 
         if close > ma200 and ema9 > ema21:
             trend_info[tf] = 'bullish'
@@ -100,6 +125,7 @@ def detect_market_trend(symbol):
             trend_info[tf] = 'bearish'
         else:
             trend_info[tf] = 'neutral'
+
     return trend_info
 
 def is_trade_allowed(side, trend_info):
@@ -112,31 +138,25 @@ def is_trade_allowed(side, trend_info):
         return False
     return True
 
-# === SIGNAL SCORE ===
 def compute_score(s):
     score = 0
     trend_info = detect_market_trend(s['symbol'])
     bull = list(trend_info.values()).count('bullish')
     bear = list(trend_info.values()).count('bearish')
     score += 10 if bull == 3 or bear == 3 else 5 if bull == 2 or bear == 2 else 0
-
     if s['side'] == 'LONG' and 45 < s['rsi'] < 70: score += 10
     elif s['side'] == 'SHORT' and 30 < s['rsi'] < 55: score += 10
-
     if s['macd_hist'] and ((s['macd_hist'] > 0 and s['side'] == 'LONG') or (s['macd_hist'] < 0 and s['side'] == 'SHORT')):
         score += 10
-
-    if s["bb_breakout"] == "YES": score += 5
+    if s.get("bb_breakout"): score += 5
     if s.get("vol_spike"): score += 10
     score += s["confidence"] * 0.3
     rr = TP_PERCENT / SL_PERCENT
     score += 10 if rr >= 2 else 5 if rr >= 1.5 else 0
     return round(score, 2)
 
-# === SIGNAL BUILDER ===
 def build_signal(name, condition, confidence, regime, trend_info, close, symbol, tf, rsi, macd_hist, bb_upper, bb_lower, volumes, side):
-    if not condition:
-        return None
+    if not condition: return None
     side = side.upper()
     entry = close
     liquidation = entry * (1 - 1 / LEVERAGE) if side == "LONG" else entry * (1 + 1 / LEVERAGE)
@@ -149,14 +169,14 @@ def build_signal(name, condition, confidence, regime, trend_info, close, symbol,
     signal = {
         "symbol": symbol,
         "timeframe": tf,
-        "side": side.upper(),
+        "side": side,
         "entry": round(entry, 6),
         "sl": round(sl_price, 6),
         "tp": round(tp_price, 6),
         "liquidation": round(liquidation, 6),
         "rsi": rsi,
         "macd_hist": macd_hist_value,
-        "trend": "bullish" if side == "long" else "bearish",
+        "trend": "bullish" if side == "LONG" else "bearish",
         "regime": regime,
         "confidence": confidence,
         "position_size": position_size,
@@ -167,17 +187,13 @@ def build_signal(name, condition, confidence, regime, trend_info, close, symbol,
     }
     signal["score"] = compute_score(signal)
     return signal
-    return signal
-
-# === ANALYZE ===
 def analyze(symbol, tf="1h"):
     data = fetch_ohlcv(symbol, tf)
     if len(data) < 60: return []
-    highs = [x[0] for x in data]
-    lows = [x[1] for x in data]
-    closes = [x[2] for x in data]
-    volumes = [x[3] for x in data]
-    open_prices = [x[4] for x in data]
+    highs = [x[1] for x in data]
+    lows = [x[2] for x in data]
+    closes = [x[3] for x in data]
+    volumes = [x[4] for x in data]
     close = closes[-1]
     ema9 = ema(closes, 9)
     ema21 = ema(closes, 21)
@@ -188,11 +204,22 @@ def analyze(symbol, tf="1h"):
     macd_line, macd_signal, macd_hist = calculate_macd(closes)
     trend_info = detect_market_trend(symbol)
 
+    if any(x is None for x in [ema9[-1], ema21[-1], macd_hist[-1], bb_upper[-1], bb_lower[-1]]):
+        return []
+
+    if None in (ma20[-1], ma200[-1]):
+        return []
+
+    if rsi is None:
+        return []
+
     regime = "trend" if ma20[-1] > ma200[-1] else (
         "mean_reversion" if rsi < 35 or rsi > 65 else "scalp"
     )
 
+
     signals = []
+
     if regime == "trend":
         sig = build_signal("Trend", ema9[-1] > ema21[-1], 90, regime, trend_info, close, symbol, tf, rsi, macd_hist, bb_upper, bb_lower, volumes, "long")
         if sig: signals.append(sig)
@@ -209,70 +236,21 @@ def analyze(symbol, tf="1h"):
         sig = build_signal("Short Reversal", True, 75, "reversal", trend_info, close, symbol, tf, rsi, macd_hist, bb_upper, bb_lower, volumes, "short")
         if sig: signals.append(sig)
 
+    if close > bb_upper[-1]:
+        sig = build_signal("Bollinger Upper Breakout", True, 70, "breakout", trend_info, close, symbol, tf, rsi, macd_hist, bb_upper, bb_lower, volumes, "long")
+        if sig:
+            sig["bb_breakout"] = "UPPER"
+            signals.append(sig)
+
+    if close < bb_lower[-1]:
+        sig = build_signal("Bollinger Lower Breakout", True, 70, "breakout", trend_info, close, symbol, tf, rsi, macd_hist, bb_upper, bb_lower, volumes, "short")
+        if sig:
+            sig["bb_breakout"] = "LOWER"
+            signals.append(sig)
+
     return signals
 
-# === SYMBOLS ===
-def fetch_ohlcv(symbol, interval='1h', limit=100):
-    url = f"https://fapi.binance.com/fapi/v1/klines?symbol={symbol}&interval={interval}&limit={limit}"
-    try:
-        r = requests.get(url, timeout=5)
-        # Standard OHLCV order: [open, high, low, close, volume]
-        return [[float(x[0]), float(x[1]), float(x[2]), float(x[4]), float(x[5])] for x in r.json()]
-    except Exception as e:
-        print(f"[ERROR] {symbol}: {e}")
-        return []
-
-def get_symbols(limit=100):
-    try:
-        r = requests.get("https://fapi.binance.com/fapi/v1/exchangeInfo", timeout=5)
-        return [s['symbol'] for s in r.json()['symbols'] if s['contractType'] == 'PERPETUAL' and 'USDT' in s['symbol']][:limit]
-    except Exception as e:
-        print(f"[ERROR] Symbols: {e}")
-        return []
-
-from dotenv import load_dotenv
-load_dotenv()
-
-DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
-REDDIT_CREDS = {
-    "client_id": os.getenv("REDDIT_CLIENT_ID"),
-    "client_secret": os.getenv("REDDIT_CLIENT_SECRET"),
-    "username": os.getenv("REDDIT_USERNAME"),
-    "password": os.getenv("REDDIT_PASSWORD"),
-    "user_agent": "AlgoTraderBot/1.0"
-}
-REDDIT_SUBREDDITS = os.getenv("REDDIT_SUBREDDIT", "algotrading").split(",")
-
-for d in [SIGNAL_DIR, TRADE_DIR]:
-    os.makedirs(d, exist_ok=True)
-
-# === LOGGING ===
-logging.basicConfig(level=logging.INFO)
-
-# === POSTING ===
-def post_to_discord(message):
-    if not DISCORD_WEBHOOK_URL:
-        logging.error("Discord webhook URL is not set.")
-        return
-    try:
-        requests.post(DISCORD_WEBHOOK_URL, json={"content": message})
-    except Exception as e:
-        logging.error(f"Discord error: {e}")
-
-def post_to_reddit(title, body):
-    try:
-        reddit = praw.Reddit(**REDDIT_CREDS)
-        subreddit_name = REDDIT_SUBREDDITS[0] if REDDIT_SUBREDDITS else "algotrading"
-        subreddit = reddit.subreddit(subreddit_name)
-        subreddit.submit(title, selftext=body)
-    except Exception as e:
-        logging.error(f"Reddit error: {e}")
-# === BINANCE API / VIRTUAL WALLET HANDLER ===
-BINANCE_API_KEY = os.getenv("BINANCE_API_KEY")
-BINANCE_API_SECRET = os.getenv("BINANCE_API_SECRET")
-
-USE_VIRTUAL = not (BINANCE_API_KEY and BINANCE_API_SECRET)
-
+# === VIRTUAL TRADER ===
 class VirtualTrader:
     def __init__(self):
         self.wallet = self.load_virtual_wallet()
@@ -304,50 +282,36 @@ class VirtualTrader:
             "qty": qty,
             "pnl": pnl,
             "strategy": signal["strategy"],
-            "timestamp": signal["timestamp"]
+            "timestamp": signal["timestamp"],
+            "mode": "VIRTUAL"
         }
         self.wallet["trades"].append(trade)
         self.save_virtual_wallet()
         return trade
 
-# === TRADE EXECUTION WRAPPER ===
 virtual_trader = VirtualTrader()
-
-# Removed duplicate execute_trade definition to avoid conflicts.
-def today_loss_pct():
-    """
-    STUB: Calculates today's loss percentage based on trade history.
-    WARNING: This function is not implemented and should not be used in production.
-    """
-    raise NotImplementedError("today_loss_pct() is a stub and must be implemented before use in production.")
-
-# (Removed duplicate main() definition to avoid conflicts)
-# === BINANCE API HANDLING ===
+# === TRADE EXECUTION ===
 try:
     from binance.client import Client
-    from dotenv import load_dotenv
     BINANCE_API_KEY = os.getenv("BINANCE_API_KEY")
     BINANCE_API_SECRET = os.getenv("BINANCE_API_SECRET")
     BINANCE_LIVE = BINANCE_API_KEY and BINANCE_API_SECRET
     client = Client(BINANCE_API_KEY, BINANCE_API_SECRET) if BINANCE_LIVE else None
-except Exception:
+except:
     BINANCE_LIVE = False
     client = None
 
-# === UNIFIED TRADE EXECUTION FUNCTION ===
-# Removed duplicate execute_trade definition to avoid conflicts.
-# === TRADE EXECUTION ===
 def execute_trade(signal):
-# Removed duplicate execute_trade definition to avoid conflicts.
     entry, tp = signal['entry'], signal['tp']
     side = signal['side']
     timestamp = signal['timestamp']
+    capital = load_capital()
+    risk_amount = capital * 0.02
+    risk_per_unit = abs(entry - signal['sl'])
+    qty = round(risk_amount / risk_per_unit, 3) if risk_per_unit > 0 else 0
+    pnl, mode = 0, "VIRTUAL"
 
     if BINANCE_LIVE:
-        capital = load_capital()
-        risk_amount = capital * 0.02
-        risk_per_unit = abs(entry - signal['sl'])
-        qty = round(risk_amount / risk_per_unit, 3) if risk_per_unit > 0 else 0
         try:
             order_side = Client.SIDE_BUY if side == "LONG" else Client.SIDE_SELL
             order = client.futures_create_order(
@@ -356,37 +320,18 @@ def execute_trade(signal):
                 type=Client.ORDER_TYPE_MARKET,
                 quantity=qty
             )
-            pnl = 0  # Real PnL tracking requires position monitoring
             mode = "REAL"
         except Exception as e:
             print("❌ Binance Error:", e)
-            pnl = 0
-        trade = virtual_trader.execute_virtual_trade(signal)
-        trade["mode"] = "VIRTUAL"
-        save_trade_log(trade)
-        save_capital(virtual_trader.wallet["balance"])
-        return trade
-        
 
-    trade = {
-        "symbol": signal["symbol"],
-        "side": side,
-        "entry": entry,
-        "exit": tp,
-        "qty": qty,
-        "pnl": pnl,
-        "strategy": signal["strategy"],
-        "timestamp": timestamp,
-        "mode": mode
-    }
+    trade = virtual_trader.execute_virtual_trade(signal)
+    trade["mode"] = mode
     save_trade_log(trade)
+    save_capital(virtual_trader.wallet["balance"])
     return trade
 
 # === TRADE LOGGING ===
 def save_trade_log(trade):
-    """
-    Appends a trade to the trade log file (trades_history.json).
-    """
     trades = []
     if os.path.exists(TRADE_LOG_FILE):
         try:
@@ -398,12 +343,8 @@ def save_trade_log(trade):
     with open(TRADE_LOG_FILE, "w") as f:
         json.dump(trades, f, indent=2)
 
-# === UTILITY FUNCTIONS ===
-
+# === CAPITAL MANAGEMENT ===
 def load_capital():
-    """
-    Loads the current trading capital from the capital file, or returns START_CAPITAL if not found.
-    """
     if not os.path.exists(CAPITAL_FILE):
         return START_CAPITAL
     with open(CAPITAL_FILE) as f:
@@ -414,26 +355,21 @@ def load_capital():
             return START_CAPITAL
 
 def save_capital(capital):
-    """
-    Saves the current trading capital to the capital file.
-    """
     with open(CAPITAL_FILE, "w") as f:
         json.dump({"capital": capital}, f, indent=2)
 
+# === UTILITIES ===
 def format_signal(signal):
-    """
-    Formats a signal dictionary into a readable string for posting.
-    """
+    color = "🟢" if signal.get("side") == "LONG" else "🔴"
+    breakout = signal.get("bb_breakout", "")
+    bb_text = f"\n📈 BB Breakout: {breakout}" if breakout else ""
     return (
-        f"Symbol: {signal.get('symbol')}\n"
-        f"Side: {signal.get('side')}\n"
-        f"Entry: {signal.get('entry')}\n"
-        f"Take Profit: {signal.get('tp')}\n"
-        f"Stop Loss: {signal.get('sl')}\n"
-        f"Score: {signal.get('score')}\n"
-        f"Confidence: {signal.get('confidence')}\n"
-        f"Strategy: {signal.get('strategy')}\n"
-        f"Timestamp: {signal.get('timestamp')}\n"
+        f"{color} **{signal.get('symbol')} - {signal.get('strategy')}**\n"
+        f"➡️ Side: `{signal.get('side')}`\n"
+        f"💵 Entry: `{signal.get('entry')}` | 🎯 TP: `{signal.get('tp')}` | 🛡️ SL: `{signal.get('sl')}`\n"
+        f"📊 RSI: `{signal.get('rsi')}` | 📉 MACD Hist: `{signal.get('macd_hist')}`\n"
+        f"🔥 Score: `{signal.get('score')}` | 💯 Confidence: `{signal.get('confidence')}`\n"
+        f"🧠 Strategy: `{signal.get('strategy')}` | 🕒 {signal.get('timestamp')}{bb_text}"
     )
 
 def save_json(data, filename):
@@ -452,3 +388,91 @@ def save_pdf(filename, data, title):
             pdf.cell(0, 8, f"{k}: {v}", ln=True)
         pdf.ln(4)
     pdf.output(filename)
+# === DISCORD / REDDIT POSTING ===
+DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
+REDDIT_CREDS = {
+    "client_id": os.getenv("REDDIT_CLIENT_ID"),
+    "client_secret": os.getenv("REDDIT_CLIENT_SECRET"),
+    "username": os.getenv("REDDIT_USERNAME"),
+    "password": os.getenv("REDDIT_PASSWORD"),
+    "user_agent": "AlgoTraderBot/1.0"
+}
+REDDIT_SUBREDDITS = os.getenv("REDDIT_SUBREDDIT", "algotrading").split(",")
+
+# Ensure directories exist
+for d in [SIGNAL_DIR, TRADE_DIR]:
+    os.makedirs(d, exist_ok=True)
+
+# Logging
+logging.basicConfig(level=logging.INFO)
+
+def post_to_discord(message):
+    if not DISCORD_WEBHOOK_URL:
+        logging.error("Discord webhook URL is not set.")
+        return
+    try:
+        requests.post(DISCORD_WEBHOOK_URL, json={"content": message})
+    except Exception as e:
+        logging.error(f"Discord error: {e}")
+
+def post_to_reddit(title, body):
+    try:
+        reddit = praw.Reddit(**REDDIT_CREDS)
+        subreddit_name = REDDIT_SUBREDDITS[0] if REDDIT_SUBREDDITS else "algotrading"
+        subreddit = reddit.subreddit(subreddit_name)
+        subreddit.submit(title, selftext=body)
+    except Exception as e:
+        logging.error(f"Reddit error: {e}")
+
+# === MAIN EXECUTION LOOP ===
+def main(limit=100, tf="1h", export_pdf=False):
+    symbols = get_symbols(limit)
+    logging.info(f"Running analysis on {len(symbols)} symbols...")
+
+    all_signals = []
+    for i, sym in enumerate(symbols):
+        logging.info(f"[{i+1}/{len(symbols)}] Analyzing: {sym}")
+        try:
+            signals = analyze(sym, tf)
+            if signals:
+                all_signals.extend(signals)
+        except Exception as e:
+            logging.error(f"Error analyzing {sym}: {e}")
+
+    if not all_signals:
+        logging.info("No signals found.")
+        return
+
+    # Sort signals by score
+    sorted_signals = sorted(all_signals, key=lambda x: x['score'], reverse=True)
+
+    # Log top 20
+    logging.info("\nTop 20 Signals:")
+    for s in sorted_signals[:20]:
+        logging.info(format_signal(s))
+
+    # Trade top 5
+    top_trades = sorted_signals[:5]
+    for sig in top_trades:
+        try:
+            filename = sig['symbol'] + "_" + sig['timestamp'].replace(" ", "_")
+            save_json(sig, os.path.join(SIGNAL_DIR, f"{filename}.json"))
+            post_to_discord(format_signal(sig))
+            post_to_reddit(f"New Signal: {sig['symbol']} {sig['side']}", format_signal(sig))
+
+            trade = execute_trade(sig)
+            logging.info(f"Executed trade: {trade}")
+            save_json(trade, os.path.join(TRADE_DIR, f"{filename}.json"))
+        except Exception as e:
+            logging.error(f"Error trading {sig['symbol']}: {e}")
+
+    if export_pdf:
+        pdf_file = f"signals_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf"
+        save_pdf(pdf_file, sorted_signals[:20], title="Top 20 Signal Report")
+        logging.info(f"Exported PDF: {pdf_file}")
+
+    logging.info("Run complete.")
+
+if __name__ == "__main__":
+    main(limit=100, tf="1h", export_pdf=True)
+# This is the main entry point for the bot. You can run this script to start the analysis and trading process.
