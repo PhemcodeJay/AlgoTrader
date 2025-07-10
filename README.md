@@ -8,7 +8,7 @@ A comprehensive cryptocurrency trading system with automated signal generation, 
 - Real-time portfolio monitoring
 - Trading signals display
 - Portfolio performance charts
-- Market overview with top cryptocurrencies
+- Automated Trading System
 
 ### 🤖 Automated Trading
 - **Automated Signal Generation**: Generate trading signals every 5 minutes
@@ -31,15 +31,20 @@ A comprehensive cryptocurrency trading system with automated signal generation, 
 - Take Profit: 25% | Stop Loss: 10%
 
 ## Quick Start
+INSTALL PYTHON AND ALL MODULES IN REQUIREMENTS.TXT
 
 ### 1. Start the Dashboard
 ```bash
 streamlit run app.py --server.port 5000
+
+python -m streamlit run app.py
 ```
 
 ### 2. Start Automated Trading (Optional)
 ```bash
 python start_automation.py
+
+press the button on the dashboard
 ```
 
 ### 3. Access the Application

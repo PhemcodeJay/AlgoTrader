@@ -16,13 +16,9 @@ from automated_trader import automated_trader
 from database import db_manager
 from data_provider import DataProvider
 
-
-
-
-
 # Configure page
 st.set_page_config(
-    page_title="AlgoTrader Dashboard",
+    page_title="AlgoTrader",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -90,7 +86,7 @@ except:
 
 # Main Content Area
 if page == "🏠 Dashboard":
-    st.title("🚀 AlgoTrader Trading Dashboard")
+    st.title("🚀 AlgoTrader Dashboard")
     
     # Key Metrics Row
     col1, col2, col3, col4 = st.columns(4)

@@ -7,3 +7,4 @@ automated_trader.log
 __pycache__/
 .env
 venv/
+automated_trader.log
