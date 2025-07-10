@@ -270,7 +270,7 @@ elif page == "💼 Portfolio":
             st.plotly_chart(perf_chart, use_container_width=True)
     
     with col2:
-        st.subheader("📊 Trade Journal")
+        st.subheader("📊 Trade Stats")
         if trades:
             stats = trading_engine.calculate_trade_statistics(trades)
             dashboard.display_trade_statistics(stats)

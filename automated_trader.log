@@ -1204,3 +1204,7 @@
 2025-07-11 01:30:56,842 - INFO - Trading paused due to risk limits
 2025-07-11 01:30:56,842 - INFO - Automation cycle completed. Next cycle in 300 seconds
 2025-07-11 01:35:05,463 - INFO - Database tables created successfully
+2025-07-11 01:35:56,902 - INFO - Starting automated signal generation cycle
+2025-07-11 01:35:56,982 - WARNING - Daily trades limit reached: 50
+2025-07-11 01:35:56,985 - INFO - Trading paused due to risk limits
+2025-07-11 01:35:56,986 - INFO - Automation cycle completed. Next cycle in 300 seconds

@@ -385,11 +385,12 @@ class TradingEngine:
             if sig:
                 signals.append(sig)
         
-        if rsi > 65 and bb_upper and bb_upper[-1] and close > bb_upper[-1]:
+        if rsi[-1] > 65 and bb_upper and bb_upper[-1] and close > bb_upper[-1]:
             sig = self.build_signal("Short Reversal", True, 75, "reversal", trend_info,
-                                  close, symbol, tf, rsi, macd_hist, bb_upper, bb_lower, volumes)
-            if sig:
-                signals.append(sig)
+                                close, symbol, tf, rsi, macd_hist, bb_upper, bb_lower, volumes)
+        if sig:
+            signals.append(sig)
+
         
         return signals
     
@@ -461,20 +462,28 @@ Regime: {signal['regime']} | Trend: {signal['trend']}
 Timestamp: {signal['timestamp']}"""
     
     def export_signals_pdf(self, signals):
-        """Export signals to PDF"""
+        """Export signals to PDF in a more human-readable format"""
         filename = f"signals_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
-        
+
         pdf = FPDF()
         pdf.add_page()
+        pdf.set_font("Arial", "B", 14)
+        pdf.cell(0, 10, "AlgoTrader Signal Report", ln=True, align="C")
         pdf.set_font("Arial", size=12)
-        pdf.cell(0, 10, "CryptoPilot Trading Signals", ln=True, align="C")
-        pdf.ln(5)
-        
-        for signal in signals:
+        pdf.ln(10)
+
+        for i, signal in enumerate(signals, start=1):
+            pdf.set_font("Arial", "B", 12)
+            pdf.cell(0, 10, f"Signal {i}", ln=True)
+            pdf.set_font("Arial", size=11)
+
             for k, v in signal.items():
-                pdf.multi_cell(0, 8, f"{k}: {v}")
-            pdf.ln(5)
-        
+                pdf.multi_cell(0, 8, f"  {k}: {v}")
+            
+            pdf.ln(6)
+            pdf.cell(0, 0, "-" * 80, ln=True)  # Horizontal separator
+            pdf.ln(4)
+
         pdf.output(filename)
         return filename
     
