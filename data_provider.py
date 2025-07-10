@@ -1,5 +1,5 @@
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Dict, Optional
 
 class DataProvider:
@@ -69,7 +69,7 @@ class DataProvider:
             formatted = []
             for entry in raw_data:
                 formatted.append({
-                    "timestamp": datetime.utc(entry[0] / 1000),
+                    "timestamp": datetime.fromtimestamp(entry[0] / 1000, tz=timezone.utc),
                     "open": float(entry[1]),
                     "high": float(entry[2]),
                     "low": float(entry[3]),

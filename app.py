@@ -15,6 +15,8 @@ from utils import format_currency, format_percentage, get_status_color
 from automated_trader import automated_trader
 from database import db_manager
 from data_provider import DataProvider
+from datetime import datetime, timezone
+
 
 # Configure page
 st.set_page_config(
@@ -110,7 +112,7 @@ if page == "🏠 Dashboard":
         )
     
     with col3:
-        total_trades_today = len([t for t in recent_trades if t['timestamp'].startswith(datetime.timezone.utc().strftime("%Y-%m-%d"))])
+        total_trades_today = len([t for t in recent_trades if t['timestamp'].startswith(datetime.now(timezone.utc).strftime("%Y-%m-%d"))])
         st.metric(
             "Trades Today",
             total_trades_today,
@@ -249,7 +251,7 @@ elif page == "💼 Portfolio":
         st.metric("Total Return", f"{format_percentage(total_return)}%")
     
     with col3:
-        daily_pnl = sum(t['pnl'] for t in trades if t['timestamp'].startswith(datetime.timezone.utc().strftime("%Y-%m-%d")))
+        daily_pnl = sum(t['pnl'] for t in trades if t['timestamp'].startswith(datetime.now(timezone.utc).strftime("%Y-%m-%d")))
         st.metric("Daily P&L", f"${format_currency(daily_pnl)}")
     
     with col4:

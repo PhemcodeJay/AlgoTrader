@@ -167,27 +167,34 @@ class TradingEngine:
                 for i in range(len(values))]
     
     def compute_rsi(self, closes, period=14):
-        """Calculate RSI"""
+        """Compute full RSI series for a list of closing prices"""
         if len(closes) < period + 1:
-            return 50
-        
-        gains, losses = [], []
+            return [50] * len(closes)  # Default neutral RSI
+
+        gains = []
+        losses = []
+
         for i in range(1, len(closes)):
             delta = closes[i] - closes[i - 1]
             gains.append(max(delta, 0))
             losses.append(max(-delta, 0))
-        
-        if len(gains) < period:
-            return 50
-        
-        avg_gain = sum(gains[-period:]) / period
-        avg_loss = sum(losses[-period:]) / period
-        
-        if avg_loss == 0:
-            return 100
-        
-        rs = avg_gain / avg_loss
-        return round(100 - (100 / (1 + rs)), 2)
+
+        rsi = [None] * period  # First `period` RSI values are undefined
+
+        for i in range(period, len(gains)):
+            avg_gain = sum(gains[i - period:i]) / period
+            avg_loss = sum(losses[i - period:i]) / period
+
+            if avg_loss == 0:
+                rsi_value = 100
+            else:
+                rs = avg_gain / avg_loss
+                rsi_value = 100 - (100 / (1 + rs))
+
+            rsi.append(round(rsi_value, 2))
+
+        return rsi
+
     
     def calculate_macd(self, values, fast=12, slow=26, signal=9):
         """Calculate MACD"""

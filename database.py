@@ -8,6 +8,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 import json
 
+
 # ✅ Get DB URL from environment or Streamlit secrets
 def get_database_url():
     # Use environment variable if it exists
@@ -39,7 +40,7 @@ class Portfolio(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     balance = Column(Float, nullable=False, default=10.0)
-    updated_at = Column(DateTime, default=datetime.timezone.utc)
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 class Trade(Base):
     __tablename__ = "trades"
@@ -53,7 +54,7 @@ class Trade(Base):
     pnl = Column(Float, nullable=False)
     strategy = Column(String(50), nullable=False)
     confidence = Column(Float, nullable=True)
-    executed_at = Column(DateTime, default=datetime.timezone.utc)
+    executed_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     trade_metadata = Column(JSON, nullable=True)
 
 class Signal(Base):
@@ -76,7 +77,7 @@ class Signal(Base):
     trend = Column(String(20), nullable=True)
     regime = Column(String(20), nullable=True)
     vol_spike = Column(Boolean, default=False)
-    generated_at = Column(DateTime, default=datetime.timezone.utc)
+    generated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     is_active = Column(Boolean, default=True)
     signal_metadata = Column(JSON, nullable=True)
 
@@ -89,7 +90,7 @@ class AutomationStats(Base):
     successful_trades = Column(Integer, default=0)
     total_pnl = Column(Float, default=0.0)
     start_time = Column(DateTime, nullable=True)
-    last_update = Column(DateTime, default=datetime.timezone.utc)
+    last_update = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     session_data = Column(JSON, nullable=True)
 
 class SystemSettings(Base):
@@ -99,7 +100,7 @@ class SystemSettings(Base):
     key = Column(String(50), unique=True, nullable=False)
     value = Column(Text, nullable=False)
     data_type = Column(String(20), default='string')  # string, int, float, bool, json
-    updated_at = Column(DateTime, default=datetime.timezone.utc)
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 # Database Operations Class
 class DatabaseManager:

@@ -2,9 +2,10 @@ import streamlit as st
 import plotly.graph_objects as go
 import pandas as pd
 from plotly.subplots import make_subplots
-from datetime import datetime
+from datetime import datetime, timezone
 from utils import format_currency, format_percentage, get_trend_color
 from trading_engine import TradingEngine
+
 
 class DashboardComponents:
     def __init__(self, engine=None):
@@ -18,8 +19,17 @@ class DashboardComponents:
             st.markdown(f"Entry: ${signal['entry']}")
             st.markdown(f"TP: ${signal['tp']} | SL: ${signal['sl']}")
         with col2:
-            confidence_color = "green" if signal['confidence'] >= 85 else "orange" if signal['confidence'] >= 75 else "red"
-            st.markdown(f"<div style='background-color: {confidence_color}; color: white; padding: 5px; border-radius: 5px; text-align: center;'>{signal['confidence']}% Confidence</div>", unsafe_allow_html=True)
+            confidence_color = (
+                "green" if signal['confidence'] >= 85 else
+                "orange" if signal['confidence'] >= 75 else
+                "red"
+            )
+            st.markdown(
+                f"<div style='background-color: {confidence_color}; color: white; "
+                f"padding: 5px; border-radius: 5px; text-align: center;'>"
+                f"{signal['confidence']}% Confidence</div>", 
+                unsafe_allow_html=True
+            )
             st.markdown(f"Score: {signal['score']}")
             st.markdown(f"RSI: {signal['rsi']}")
 
@@ -58,9 +68,12 @@ class DashboardComponents:
             running_total += t['pnl']
             cumulative_pnl.append(running_total)
             try:
-                dates.append(datetime.strptime(t['timestamp'].split()[0], "%Y-%m-%d"))
+                dt = datetime.fromisoformat(t['timestamp'])
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=timezone.utc)
+                dates.append(dt)
             except:
-                dates.append(datetime.now())
+                dates.append(datetime.now(timezone.utc))
 
         fig = go.Figure(go.Scatter(x=dates, y=cumulative_pnl, mode='lines+markers',
                                    line=dict(color='#00d4aa', width=2)))
@@ -81,9 +94,12 @@ class DashboardComponents:
             cumulative_pnl.append(running_total)
             daily_pnl.append(t['pnl'])
             try:
-                dates.append(datetime.strptime(t['timestamp'].split()[0], "%Y-%m-%d"))
+                dt = datetime.fromisoformat(t['timestamp'])
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=timezone.utc)
+                dates.append(dt)
             except:
-                dates.append(datetime.now())
+                dates.append(datetime.now(timezone.utc))
 
         fig = make_subplots(rows=2, cols=1,
                             subplot_titles=('Portfolio Value', 'Daily P&L'),
@@ -138,14 +154,13 @@ class DashboardComponents:
 
         if 'RSI' in indicators:
             rsi = self.engine.compute_rsi(close_prices)
+
+        if isinstance(rsi, (list, np.ndarray, pd.Series)):
             fig.add_trace(go.Scatter(x=df['timestamp'][-len(rsi):], y=rsi, name='RSI',
-                                     line=dict(color='purple', width=2)), row=3, col=1)
-            fig.add_hline(y=70, line_dash="dash", line_color="red", row=3, col=1)
-            fig.add_hline(y=30, line_dash="dash", line_color="green", row=3, col=1)
+                                    line=dict(color='purple', width=2)), row=3, col=1)
 
-        fig.update_layout(template="plotly_dark", height=800, xaxis_rangeslider_visible=False)
-        return fig
-    
-    
+            fig.add_shape(type="line", x0=df['timestamp'].min(), x1=df['timestamp'].max(),
+                        y0=70, y1=70, line=dict(color="red", dash="dash"), row=3, col=1)
+            fig.add_shape(type="line", x0=df['timestamp'].min(), x1=df['timestamp'].max(),
+                        y0=30, y1=30, line=dict(color="green", dash="dash"), row=3, col=1)
 
-    
