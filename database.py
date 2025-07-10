@@ -7,13 +7,15 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 import json
 
-user = os.getenv("DB_USER")
-password = os.getenv("DB_PASSWORD")
+
+from dotenv import load_dotenv
+load_dotenv()
 
 
 # Database configuration
 DATABASE_URL = os.getenv('DATABASE_URL')
-
+user = os.getenv("DB_USER")
+password = os.getenv("DB_PASSWORD")
 
 # SQLAlchemy setup
 engine = create_engine(
