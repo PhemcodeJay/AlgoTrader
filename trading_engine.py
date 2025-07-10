@@ -168,6 +168,16 @@ class TradingEngine:
     
     def compute_rsi(self, closes, period=14):
         """Compute full RSI series for a list of closing prices"""
+
+        # Ensure `closes` is a list/array-like
+        if isinstance(closes, float):
+            closes = [closes]
+        elif isinstance(closes, (pd.Series, np.ndarray)):
+            closes = list(closes)
+
+        if not isinstance(closes, list):
+            raise TypeError(f"`closes` must be a list-like object, got {type(closes)}")
+
         if len(closes) < period + 1:
             return [50] * len(closes)  # Default neutral RSI
 
