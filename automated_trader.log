@@ -700,3 +700,47 @@
 2025-07-10 06:46:26,779 - INFO - Trading paused due to risk limits
 2025-07-10 06:46:26,779 - INFO - Automation cycle completed. Next cycle in 900 seconds
 2025-07-10 06:47:29,018 - INFO - Database tables created successfully
+2025-07-10 06:48:44,968 - INFO - Automation settings loaded successfully
+2025-07-10 06:48:44,976 - INFO - Starting automated signal generation cycle
+2025-07-10 06:48:44,976 - INFO - Automated trading started
+2025-07-10 06:48:45,004 - WARNING - Daily trades limit reached: 30
+2025-07-10 06:48:45,007 - INFO - Trading paused due to risk limits
+2025-07-10 06:48:45,007 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 06:48:49,479 - WARNING - Daily trades limit reached: 30
+2025-07-10 06:48:49,481 - INFO - Trading paused due to risk limits
+2025-07-10 06:50:22,248 - INFO - Database tables created successfully
+2025-07-10 06:50:50,499 - INFO - Automation settings loaded successfully
+2025-07-10 06:50:50,502 - INFO - Starting automated signal generation cycle
+2025-07-10 06:50:50,502 - INFO - Automated trading started
+2025-07-10 06:50:50,523 - WARNING - Daily trades limit reached: 30
+2025-07-10 06:50:50,537 - INFO - Trading paused due to risk limits
+2025-07-10 06:50:50,537 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 06:51:03,761 - WARNING - Daily trades limit reached: 30
+2025-07-10 06:51:03,767 - INFO - Trading paused due to risk limits
+2025-07-10 06:51:23,337 - INFO - Automation settings saved successfully
+2025-07-10 06:51:23,338 - INFO - Automation settings updated successfully
+2025-07-10 06:51:53,646 - INFO - Automation settings saved successfully
+2025-07-10 06:51:53,646 - INFO - Automation settings updated successfully
+2025-07-10 06:51:57,915 - INFO - Automation settings saved successfully
+2025-07-10 06:51:57,942 - INFO - Automation settings updated successfully
+2025-07-10 06:53:51,456 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 06:53:51,514 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 06:53:51,570 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 06:53:51,575 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 06:53:51,587 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 06:53:51,600 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 06:53:51,652 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 06:53:51,653 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 06:53:51,671 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 06:53:51,672 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 06:53:51,775 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 06:53:51,777 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 06:53:51,781 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 06:53:51,785 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 06:53:51,984 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 06:53:51,989 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 06:53:51,995 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 06:53:51,999 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 06:53:52,003 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 06:53:52,014 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 06:55:25,872 - INFO - Database tables created successfully

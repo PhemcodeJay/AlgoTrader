@@ -18,8 +18,6 @@ def get_database_url():
     # Otherwise use Streamlit secrets (in production)
     import streamlit as st
     return st.secrets["DATABASE_URL"]
-
-# ✅ Single source of truth for DATABASE_URL
 DATABASE_URL = get_database_url()
 
 # ✅ SQLAlchemy setup
