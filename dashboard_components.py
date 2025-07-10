@@ -146,66 +146,6 @@ class DashboardComponents:
         fig.update_layout(template="plotly_dark", height=800, xaxis_rangeslider_visible=False)
         return fig
     
-    def display_market_overview(self, market_data):
-        import streamlit as st
+    
 
-        st.markdown("### 🌍 Market Overview")
-
-        def format_price(price_raw):
-            try:
-                price_float = float(price_raw)
-                if price_float < 0.01:
-                    return f"{price_float:.8f}"
-                elif price_float < 1:
-                    return f"{price_float:.6f}"
-                elif price_float < 100:
-                    return f"{price_float:.4f}"
-                else:
-                    return f"{price_float:,.2f}"
-            except:
-                return str(price_raw)
-
-        def format_percentage(pct):
-            try:
-                return f"{pct:.2f}"
-            except:
-                return "0.00"
-
-        def get_trend_color(pct):
-            return "#16c784" if pct > 0 else "#ea3943" if pct < 0 else "#cccccc"
-
-            for i in range(0, len(market_data), 4):
-                cols = st.columns(4)
-
-            for j in range(4):
-                if i + j < len(market_data):
-                    data = market_data[i + j]
-                    symbol = data.get('symbol', 'N/A')
-                    price_raw = data.get('price', 'N/A')
-                    price_change = data.get('price_change_pct', 0.0)
-
-                    price = format_price(price_raw)
-                    change_color = get_trend_color(price_change)
-                    change_pct = format_percentage(price_change)
-
-                    with cols[j]:
-                        st.markdown(
-                            f"""
-                            <div style='
-                                border: 1px solid #333;
-                                border-radius: 12px;
-                                padding: 12px;
-                                margin: 10px 0;
-                                background-color: #111;
-                                text-align: center;
-                                color: white;
-                                max-width: 100%;
-                                box-sizing: border-box;
-                            '>
-                                <div style='font-weight: 600; font-size: 16px; margin-bottom: 6px;'>{symbol}</div>
-                                <div style='font-size: 20px; margin-bottom: 4px;'>${price}</div>
-                                <div style='color: {change_color}; font-size: 16px;'>{change_pct}%</div>
-                            </div>
-                            """,
-                            unsafe_allow_html=True
-                        )
+    
