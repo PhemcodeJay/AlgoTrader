@@ -114,7 +114,7 @@ if page == "🏠 Dashboard":
         )
     
     with col3:
-        total_trades_today = len([t for t in recent_trades if t['timestamp'].startswith(datetime.utcnow().strftime("%Y-%m-%d"))])
+        total_trades_today = len([t for t in recent_trades if t['timestamp'].startswith(datetime.now().strftime("%Y-%m-%d"))])
         st.metric(
             "Trades Today",
             total_trades_today,
