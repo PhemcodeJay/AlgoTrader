@@ -1,6 +1,7 @@
 import streamlit as st
 import plotly.graph_objects as go
 import pandas as pd
+import numpy as np
 from plotly.subplots import make_subplots
 from datetime import datetime, timezone
 from utils import format_currency, format_percentage, get_trend_color
@@ -10,7 +11,7 @@ from trading_engine import TradingEngine
 class DashboardComponents:
     def __init__(self, engine=None):
         self.engine = engine or TradingEngine()
-    
+
     def display_signal_card(self, signal):
         col1, col2 = st.columns([2, 1])
         with col1:
@@ -154,13 +155,14 @@ class DashboardComponents:
 
         if 'RSI' in indicators:
             rsi = self.engine.compute_rsi(close_prices)
+            if isinstance(rsi, (list, np.ndarray, pd.Series)):
+                fig.add_trace(go.Scatter(x=df['timestamp'][-len(rsi):], y=rsi, name='RSI',
+                                         line=dict(color='purple', width=2)), row=3, col=1)
 
-        if isinstance(rsi, (list, np.ndarray, pd.Series)):
-            fig.add_trace(go.Scatter(x=df['timestamp'][-len(rsi):], y=rsi, name='RSI',
-                                    line=dict(color='purple', width=2)), row=3, col=1)
+                fig.add_shape(type="line", x0=df['timestamp'].min(), x1=df['timestamp'].max(),
+                              y0=70, y1=70, line=dict(color="red", dash="dash"), row=3, col=1)
+                fig.add_shape(type="line", x0=df['timestamp'].min(), x1=df['timestamp'].max(),
+                              y0=30, y1=30, line=dict(color="green", dash="dash"), row=3, col=1)
 
-            fig.add_shape(type="line", x0=df['timestamp'].min(), x1=df['timestamp'].max(),
-                        y0=70, y1=70, line=dict(color="red", dash="dash"), row=3, col=1)
-            fig.add_shape(type="line", x0=df['timestamp'].min(), x1=df['timestamp'].max(),
-                        y0=30, y1=30, line=dict(color="green", dash="dash"), row=3, col=1)
-
+        fig.update_layout(template="plotly_dark", height=800, xaxis_rangeslider_visible=False)
+        return fig
