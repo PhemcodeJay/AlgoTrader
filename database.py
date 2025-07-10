@@ -8,8 +8,7 @@ from sqlalchemy.pool import StaticPool
 import json
 
 
-from dotenv import load_dotenv
-load_dotenv()
+
 
 
 # Database configuration
