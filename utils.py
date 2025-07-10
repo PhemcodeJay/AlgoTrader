@@ -78,8 +78,8 @@ def validate_trading_parameters(tp_pct, sl_pct, leverage):
     if sl_pct <= 0:
         errors.append("Stop loss percentage must be positive")
     
-    if leverage < 1 or leverage > 100:
-        errors.append("Leverage must be between 1 and 100")
+    if leverage < 1 or leverage > 50:
+        errors.append("Leverage must be between 1 and 50")
     
     if tp_pct <= sl_pct:
         errors.append("Take profit should be greater than stop loss")

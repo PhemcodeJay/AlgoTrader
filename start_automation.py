@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CryptoPilot Automation Starter Script
+AlgoTrader Automation Starter Script
 Run this script to start automated trading alongside your dashboard
 """
 
@@ -17,7 +17,7 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 def main():
-    print("🚀 CryptoPilot Automated Trading")
+    print("🚀 AlgoTrader Automated Trading")
     print("=" * 40)
     print("This script runs the automated trading system alongside your dashboard.")
     print("The automation will:")

@@ -1,5 +1,7 @@
 import os
 import json
+import numpy as np
+import pandas as pd
 import requests
 from datetime import datetime, timedelta, timezone
 from fpdf import FPDF
@@ -31,7 +33,7 @@ class TradingEngine:
             "client_secret": os.getenv("REDDIT_CLIENT_SECRET", ""),
             "username": os.getenv("REDDIT_USERNAME", ""),
             "password": os.getenv("REDDIT_PASSWORD", ""),
-            "user_agent": "cryptopilot_bot"
+            "user_agent": "AlgoTrader"
         }
     
     def load_capital(self):
@@ -478,7 +480,7 @@ Timestamp: {signal['timestamp']}"""
     
     def test_discord_connection(self, webhook_url):
         """Test Discord webhook connection"""
-        test_message = "🧪 CryptoPilot Dashboard - Connection Test"
+        test_message = "🧪 AlgoTrader - Connection Test"
         response = requests.post(webhook_url, json={"content": test_message}, timeout=10)
         response.raise_for_status()
     

@@ -9,3 +9,4 @@ praw
 pdfkit
 sqlalchemy
 psycopg2-binary
+fpdf

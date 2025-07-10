@@ -1,8 +1,8 @@
-# CryptoPilot Dashboard
+# AlgoTrader Dashboard
 
 ## Overview
 
-CryptoPilot is a cryptocurrency trading dashboard built with Streamlit that provides real-time trading signals, portfolio management, and charting capabilities. The application integrates with Binance API for market data and includes automated trading signal generation with social media posting capabilities.
+AlgoTrader is a cryptocurrency trading dashboard built with Streamlit that provides real-time trading signals, portfolio management, and charting capabilities. The application integrates with Binance API for market data and includes automated trading signal generation with social media posting capabilities.
 
 ## System Architecture
 

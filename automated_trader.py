@@ -16,11 +16,11 @@ class AutomatedTrader:
         self.automation_thread = None
         
         # Automation settings
-        self.signal_generation_interval = 300  # 5 minutes
+        self.signal_generation_interval = 900  # 15 minutes
         self.trade_execution_enabled = True
-        self.min_confidence_threshold = 75
+        self.min_confidence_threshold = 80
         self.max_signals_per_cycle = 5
-        self.max_daily_trades = 20
+        self.max_daily_trades = 50
         
         # Risk management
         self.max_position_size_pct = 5  # 5% of portfolio per trade
@@ -93,7 +93,7 @@ class AutomatedTrader:
                 return False
         
         # Check daily trades limit
-        today = datetime.utcnow().strftime("%Y-%m-%d")
+        today = datetime.now().strftime("%Y-%m-%d")
         daily_trades = len([t for t in trades if t['timestamp'].startswith(today)])
         if daily_trades >= self.max_daily_trades:
             self.logger.warning(f"Daily trades limit reached: {daily_trades}")
@@ -213,11 +213,11 @@ class AutomatedTrader:
                     self.logger.info(f"Automation cycle completed. Next cycle in {self.signal_generation_interval} seconds")
                 
                 # Sleep for a short interval before checking again
-                time.sleep(30)
+                time.sleep(60)
                 
             except Exception as e:
                 self.logger.error(f"Error in automation cycle: {e}")
-                time.sleep(60)  # Wait longer on error
+                time.sleep(90)  # Wait longer on error
     
     def start_automation(self):
         """Start the automated trading"""

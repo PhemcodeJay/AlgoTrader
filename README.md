@@ -1,4 +1,4 @@
-# 🚀 CryptoPilot - Automated Trading Dashboard
+# 🚀 AlgoTrader - Automated Trading Dashboard
 
 A comprehensive cryptocurrency trading system with automated signal generation, portfolio management, and real-time monitoring.
 

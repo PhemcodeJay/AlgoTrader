@@ -6,7 +6,7 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 import json
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 import time
 from trading_engine import TradingEngine
 from dashboard_components import DashboardComponents
@@ -15,7 +15,6 @@ from utils import format_currency, format_percentage, get_status_color
 from automated_trader import automated_trader
 from database import db_manager
 from data_provider import DataProvider
-from datetime import datetime, timezone
 
 
 # Configure page
@@ -42,7 +41,7 @@ st.sidebar.markdown("---")
 
 page = st.sidebar.selectbox(
     "Navigate",
-    ["🏠 Dashboard", "📊 Signals", "💼 Portfolio", "📈 Charts", "🤖 Automation", "🗄️ Database", "⚙️ Settings"]
+    ["🏠 Dashboard", "📊 Signals", "💼 Portfolio", "📈 Charts", "🤖 AlgoTrade", "🗄️ Records", "⚙️ Settings"]
 )
 
 # Auto-refresh toggle
@@ -64,7 +63,7 @@ daily_pnl_pct = trading_engine.today_loss_pct()
 status_color = get_status_color(daily_pnl_pct)
 
 st.sidebar.metric(
-    "💰 Portfolio Balance",
+    "💰 Wallet Balance",
     f"${format_currency(balance)}",
     f"{format_percentage(daily_pnl_pct)}% today"
 )
@@ -75,12 +74,12 @@ st.sidebar.markdown(f"**Status:** <span style='color: {status_color}'>{'🟢 Act
 automation_status = automated_trader.get_automation_status()
 automation_indicator = "🤖 Running" if automation_status['is_running'] else "⏸️ Stopped"
 automation_color = "#00d4aa" if automation_status['is_running'] else "#ff4444"
-st.sidebar.markdown(f"**Automation:** <span style='color: {automation_color}'>{automation_indicator}</span>", unsafe_allow_html=True)
+st.sidebar.markdown(f"**Auto Mode:** <span style='color: {automation_color}'>{automation_indicator}</span>", unsafe_allow_html=True)
 
 # Database Status
 try:
     db_balance = db_manager.get_portfolio_balance()
-    db_status = "🟢 Connected" if db_balance is not None else "🔴 Error"
+    db_status = "🟢 Ok" if db_balance is not None else "🔴 Error"
     db_color = "#00d4aa" if db_balance is not None else "#ff4444"
     st.sidebar.markdown(f"**Database:** <span style='color: {db_color}'>{db_status}</span>", unsafe_allow_html=True)
 except:
@@ -88,14 +87,14 @@ except:
 
 # Main Content Area
 if page == "🏠 Dashboard":
-    st.title("🚀 AlgoTrader Dashboard")
+    st.title("🚀 AlgoTrader")
     
     # Key Metrics Row
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         st.metric(
-            "Portfolio Value",
+            "Wallet Balance",
             f"${format_currency(balance)}",
             f"{format_percentage(daily_pnl_pct)}%"
         )
@@ -135,14 +134,14 @@ if page == "🏠 Dashboard":
     with col1:
         st.subheader("📡 Latest Signals")
         if recent_signals:
-            for i, signal in enumerate(recent_signals[:3]):
+            for i, signal in enumerate(recent_signals[:5]):
                 with st.expander(f"#{i+1} {signal['symbol']} - {signal['side']} ({signal['confidence']}%)", expanded=i==0):
                     dashboard.display_signal_card(signal)
         else:
             st.info("No recent signals available")
     
     with col2:
-        st.subheader("📊 Portfolio Performance")
+        st.subheader("📊 Wallet Tracker")
         if recent_trades:
             # Create performance chart
             perf_chart = dashboard.create_portfolio_performance_chart(recent_trades, balance)
@@ -154,7 +153,7 @@ if page == "🏠 Dashboard":
 
 
 elif page == "📊 Signals":
-    st.title("📊 Trading Signals")
+    st.title("📊 AI Trading Signals")
     
     # Signal Generation Controls
     col1, col2, col3 = st.columns(3)
@@ -166,7 +165,7 @@ elif page == "📊 Signals":
         confidence_threshold = st.slider("Min Confidence %", min_value=50, max_value=95, value=75)
     
     with col3:
-        if st.button("🔍 Generate New Signals", type="primary"):
+        if st.button("🔍 Scan New Signals", type="primary"):
             with st.spinner("Analyzing markets..."):
                 signals = trading_engine.generate_signals(symbol_limit, confidence_threshold)
                 st.success(f"Generated {len(signals)} signals")
@@ -234,7 +233,7 @@ elif page == "📊 Signals":
         st.info("No signals available. Generate new signals to get started.")
 
 elif page == "💼 Portfolio":
-    st.title("💼 Portfolio Management")
+    st.title("💼 Wallet Summary")
     
     # Portfolio Summary
     balance = trading_engine.load_capital()
@@ -264,13 +263,13 @@ elif page == "💼 Portfolio":
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.subheader("📈 Performance Chart")
+        st.subheader("📈 Assets Analysis")
         if trades:
             perf_chart = dashboard.create_detailed_performance_chart(trades, balance)
             st.plotly_chart(perf_chart, use_container_width=True)
     
     with col2:
-        st.subheader("📊 Trade Statistics")
+        st.subheader("📊 Trade Journal")
         if trades:
             stats = trading_engine.calculate_trade_statistics(trades)
             dashboard.display_trade_statistics(stats)
@@ -285,7 +284,7 @@ elif page == "💼 Portfolio":
         st.info("No trades executed yet")
 
 elif page == "📈 Charts":
-    st.title("📈 Technical Analysis")
+    st.title("📈 Market Analysis")
     
     # Symbol selection
     symbols = data_provider.get_popular_symbols()
@@ -336,7 +335,7 @@ elif page == "📈 Charts":
             st.error(f"Failed to load data for {selected_symbol}")
 
 elif page == "🤖 Automation":
-    st.title("🤖 Automated Trading")
+    st.title("🤖 Trading System")
     
     # Get automation status
     automation_status = automated_trader.get_automation_status()
@@ -345,7 +344,7 @@ elif page == "🤖 Automation":
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        status_text = "🟢 Running" if automation_status['is_running'] else "🔴 Stopped"
+        status_text = "🟢 Active" if automation_status['is_running'] else "🔴 Off"
         st.metric("Automation Status", status_text)
     
     with col2:
@@ -359,7 +358,7 @@ elif page == "🤖 Automation":
     
     with col1:
         if not automation_status['is_running']:
-            if st.button("▶️ Start Automation", type="primary"):
+            if st.button("▶️ Start Auto Mode", type="primary"):
                 if automated_trader.start_automation():
                     st.success("Automation started successfully!")
                     time.sleep(1)
@@ -376,7 +375,7 @@ elif page == "🤖 Automation":
                     st.error("Failed to stop automation")
     
     with col2:
-        if st.button("🔄 Force Signal Generation"):
+        if st.button("🔄 Force Signal Scan"):
             with st.spinner("Generating signals..."):
                 signals = automated_trader.generate_automated_signals()
                 st.success(f"Generated {len(signals)} signals")
@@ -405,9 +404,9 @@ elif page == "🤖 Automation":
         
         signal_interval = st.slider(
             "Signal Generation Interval (minutes)",
-            min_value=1,
-            max_value=60,
-            value=automation_status['settings']['signal_interval'] // 60,
+            min_value=5,
+            max_value=3600,
+            value=automation_status['settings']['signal_interval'] // 3600,
             help="How often to generate new signals"
         )
         
@@ -439,7 +438,7 @@ elif page == "🤖 Automation":
         max_daily_trades = st.slider(
             "Max Daily Trades",
             min_value=1,
-            max_value=50,
+            max_value=150,
             value=automation_status['settings']['max_daily_trades'],
             help="Maximum number of trades per day"
         )
@@ -519,7 +518,7 @@ elif page == "🤖 Automation":
                 st.info(f"Next Signal Generation: {next_gen.strftime('%Y-%m-%d %H:%M:%S')}")
 
 elif page == "🗄️ Database":
-    st.title("🗄️ Database Management")
+    st.title("🗄️ Records")
     
     # Database Status
     col1, col2, col3 = st.columns(3)
@@ -527,7 +526,7 @@ elif page == "🗄️ Database":
     with col1:
         try:
             db_balance = db_manager.get_portfolio_balance()
-            db_status = "🟢 Connected" if db_balance is not None else "🔴 Error"
+            db_status = "🟢 Ok" if db_balance is not None else "🔴 Error"
             st.metric("Database Status", db_status)
         except Exception as e:
             st.metric("Database Status", "🔴 Error")
@@ -574,9 +573,9 @@ elif page == "🗄️ Database":
         st.markdown("**System Information**")
         
         try:
-            # Portfolio balance
+            # Wallet Balance
             balance = db_manager.get_portfolio_balance()
-            st.write(f"**Portfolio Balance:** ${balance:.2f}")
+            st.write(f"**Wallet Balance:** ${balance:.2f}")
             
             # Daily P&L
             daily_pnl = db_manager.get_daily_pnl()
@@ -622,7 +621,7 @@ elif page == "🗄️ Database":
     st.subheader("📋 Database Tables")
     
     table_info = {
-        "portfolio": "Current portfolio balance and history",
+        "portfolio": "Current Wallet Balance and history",
         "trades": "All executed trades with P&L tracking",
         "signals": "Generated trading signals with analysis",
         "automation_stats": "Automation performance statistics",
@@ -809,5 +808,5 @@ elif page == "⚙️ Settings":
 
 # Auto refresh functionality
 if auto_refresh:
-    time.sleep(30)
+    time.sleep(60)
     st.rerun()
