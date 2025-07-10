@@ -513,3 +513,8 @@
 2025-07-10 03:37:57,753 - INFO - Database tables created successfully
 2025-07-10 03:38:40,013 - INFO - Database tables created successfully
 2025-07-10 03:39:30,048 - INFO - Database tables created successfully
+2025-07-10 03:41:18,566 - INFO - Starting automated signal generation cycle
+2025-07-10 03:41:18,587 - WARNING - Daily trades limit reached: 25
+2025-07-10 03:41:18,588 - INFO - Trading paused due to risk limits
+2025-07-10 03:41:18,589 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 03:45:06,099 - INFO - Database tables created successfully
