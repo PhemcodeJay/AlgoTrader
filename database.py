@@ -11,13 +11,7 @@ from dotenv import load_dotenv
 # Load from .env (for local dev)
 load_dotenv()
 
-
-DATABASE_URL = (
-    st.secrets["DATABASE_URL"]
-    if "DATABASE_URL" in st.secrets
-    else os.getenv("DATABASE_URL", "postgresql://postgres:1234@localhost:5432/Algotrader")
-)
-
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # ✅ Get DB URL from env or Streamlit secrets
 def get_database_url():
