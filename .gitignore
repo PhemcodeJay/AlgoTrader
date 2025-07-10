@@ -1,11 +1,8 @@
 signals/
 trades/
-.streamlit/
 .replit
 replit.md
 automated_trader.log
 __pycache__/
 .env
 venv/
-automated_trader.log
-automated_trader.log
