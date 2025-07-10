@@ -7,3 +7,5 @@ plotly
 yfinance
 praw
 pdfkit
+sqlalchemy
+psycopg2-binary

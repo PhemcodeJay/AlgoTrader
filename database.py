@@ -1,20 +1,41 @@
 import os
 import logging
+import streamlit as st
 from datetime import datetime, timezone
 from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, Boolean, Text, JSON
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 import json
+from dotenv import load_dotenv
+# Load from .env (for local dev)
+load_dotenv()
 
-DATABASE_URL=postgresql://postgres:1234@localhost:5432/Algotrader # type: ignore
 
-# SQLAlchemy setup
+DATABASE_URL = (
+    st.secrets["DATABASE_URL"]
+    if "DATABASE_URL" in st.secrets
+    else os.getenv("DATABASE_URL", "postgresql://postgres:1234@localhost:5432/Algotrader")
+)
+
+
+# ✅ Get DB URL from env or Streamlit secrets
+def get_database_url():
+    # Use environment variable if it exists
+    if "DATABASE_URL" in os.environ:
+        return os.environ["DATABASE_URL"]
+    # Otherwise use Streamlit secrets (in production)
+    import streamlit as st
+    return st.secrets["DATABASE_URL"]
+
+# ✅ Single source of truth for DATABASE_URL
+DATABASE_URL = get_database_url()
+
+# ✅ SQLAlchemy setup
 engine = create_engine(
     DATABASE_URL,
-    poolclass=StaticPool,
     pool_pre_ping=True,
-    echo=False
+    echo=False  # Change to True if you want SQL debug logs
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -412,7 +433,7 @@ class DatabaseManager:
             if setting:
                 setting.value = value_str
                 setting.data_type = data_type
-                setting.updated_at = datetime.utcnow()
+                setting.updated_at = datetime.now()
             else:
                 setting = SystemSettings(key=key, value=value_str, data_type=data_type)
                 session.add(setting)

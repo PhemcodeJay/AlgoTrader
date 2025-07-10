@@ -673,3 +673,23 @@
 2025-07-10 06:11:17,740 - INFO - Signal added: ADAUSDT - Trend
 2025-07-10 06:11:33,849 - INFO - Database tables created successfully
 2025-07-10 06:13:10,289 - INFO - Database tables created successfully
+2025-07-10 06:18:44,556 - INFO - Starting automated signal generation cycle
+2025-07-10 06:18:45,576 - WARNING - Daily trades limit reached: 30
+2025-07-10 06:18:45,577 - INFO - Trading paused due to risk limits
+2025-07-10 06:18:45,577 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 06:20:17,338 - INFO - Starting automated signal generation cycle
+2025-07-10 06:20:17,427 - WARNING - Daily trades limit reached: 30
+2025-07-10 06:20:17,428 - INFO - Trading paused due to risk limits
+2025-07-10 06:20:17,429 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 06:23:08,937 - INFO - Starting automated signal generation cycle
+2025-07-10 06:23:09,118 - WARNING - Daily trades limit reached: 30
+2025-07-10 06:23:09,147 - INFO - Trading paused due to risk limits
+2025-07-10 06:23:09,166 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 06:34:04,615 - INFO - Starting automated signal generation cycle
+2025-07-10 06:34:05,461 - WARNING - Daily trades limit reached: 30
+2025-07-10 06:34:05,462 - INFO - Trading paused due to risk limits
+2025-07-10 06:34:05,462 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 06:35:34,797 - INFO - Starting automated signal generation cycle
+2025-07-10 06:35:35,814 - WARNING - Daily trades limit reached: 30
+2025-07-10 06:35:35,815 - INFO - Trading paused due to risk limits
+2025-07-10 06:35:35,815 - INFO - Automation cycle completed. Next cycle in 900 seconds
