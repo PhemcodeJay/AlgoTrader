@@ -5,5 +5,5 @@ pandas
 matplotlib
 plotly
 yfinance
-snoowrap
+praw
 pdfkit

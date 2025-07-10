@@ -44,9 +44,9 @@ page = st.sidebar.selectbox(
 )
 
 # Auto-refresh toggle
-auto_refresh = st.sidebar.checkbox("Auto Refresh (30s)", value=True)
+auto_refresh = st.sidebar.checkbox("Auto Refresh (60s)", value=True)
 if auto_refresh:
-    # Auto refresh every 30 seconds
+    # Auto refresh every 60 seconds
     time.sleep(0.1)  # Small delay to prevent too frequent updates
 
 # Manual refresh button
