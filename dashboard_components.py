@@ -167,38 +167,54 @@ class DashboardComponents:
         fig.update_layout(template="plotly_dark", height=800, xaxis_rangeslider_visible=False)
         return fig
     
-    def render_ticker(self, ticker_data, position='top'):
-        if not ticker_data:
+    def render_ticker_bar(self, tickers, position="top"):
+        """Render a horizontally scrolling real-time ticker in Streamlit."""
+        if not tickers:
             return
 
-        ticker_html = " | ".join([
-            f"<b>{item['symbol']}</b>: ${item['price']:.2f} "
-            f"(<span style='color:{'green' if item['change'] > 0 else 'red'}'>{item['change']:.2f}%</span>) "
-            f"Vol: ${item['volume'] / 1e6:.2f}M"
-            for item in ticker_data
-        ])
+        # Prepare ticker items
+        ticker_items = ""
+        for t in tickers:
+            arrow = "▲" if t['change'] >= 0 else "▼"
+            color = "limegreen" if t['change'] >= 0 else "red"
+            ticker_items += f"""
+                <div class='ticker-item'>
+                    <span style='color:white; font-weight:bold;'>{t['symbol']}</span>&nbsp;
+                    <span style='color:{color};'>{arrow} {abs(t['change']):.2f}%</span>&nbsp;
+                    <span style='color:white;'>Vol: {t['volume']:.0f}</span>
+                </div>
+            """
 
-        st.markdown(
-            f"""
-            <div style='
-                position: fixed;
-                { 'top' if position == 'top' else 'bottom' }: 0;
-                left: 0;
+        html = f"""
+        <style>
+            .ticker-wrap {{
                 width: 100%;
-                background-color: #111;
-                color: #00ff99;
-                padding: 10px 0;
-                font-family: monospace;
-                font-size: 16px;
-                white-space: nowrap;
                 overflow: hidden;
-                z-index: 9999;
-            '>
-                <marquee behavior="scroll" direction="left" scrollamount="5">
-                    {ticker_html}
-                </marquee>
+                box-sizing: border-box;
+                background: rgba(0,0,0,0.75);
+                padding: 8px 0;
+            }}
+            .ticker-move {{
+                display: inline-block;
+                white-space: nowrap;
+                padding-left: 100%;
+                animation: ticker-slide 40s linear infinite;
+            }}
+            .ticker-item {{
+                display: inline-block;
+                margin-right: 32px;
+                font-family: monospace;
+            }}
+            @keyframes ticker-slide {{
+                0% {{ transform: translateX(0); }}
+                100% {{ transform: translateX(-100%); }}
+            }}
+        </style>
+        <div class="ticker-wrap">
+            <div class="ticker-move">
+                {ticker_items}
             </div>
-            """,
-            unsafe_allow_html=True
-        )
+        </div>
+        """
 
+        st.markdown(html, unsafe_allow_html=True)

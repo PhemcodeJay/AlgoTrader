@@ -1,3 +1,4 @@
+import requests
 def format_currency(value, decimals=2):
     """Format currency value with appropriate decimal places"""
     if value is None:
@@ -133,3 +134,23 @@ def calculate_drawdown(trades, starting_capital):
         max_drawdown = max(max_drawdown, drawdown)
     
     return round(max_drawdown, 2)
+
+
+def get_ticker_snapshot(limit=50):
+        url = "https://api.binance.com/api/v3/ticker/24hr"
+        try:
+            data = requests.get(url).json()
+            usdt_pairs = [d for d in data if d['symbol'].endswith('USDT')]
+            top = sorted(usdt_pairs, key=lambda x: float(x['quoteVolume']), reverse=True)[:limit]
+
+            result = []
+            for item in top:
+                result.append({
+                    'symbol': item['symbol'],
+                    'price': float(item['lastPrice']),
+                    'volume': float(item['quoteVolume']),
+                    'change': float(item['priceChangePercent'])
+                })
+            return result
+        except Exception as e:
+            return []
