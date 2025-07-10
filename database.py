@@ -8,16 +8,19 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 import json
 
-DATABASE_URL = st.secrets["DATABASE_URL"]
-
-# ✅ Get DB URL from env or Streamlit secrets
+# ✅ Get DB URL from environment or Streamlit secrets
 def get_database_url():
     # Use environment variable if it exists
-    if "DATABASE_URL" in os.environ:
-        return os.environ["DATABASE_URL"]
-    # Otherwise use Streamlit secrets (in production)
-    import streamlit as st
-    return st.secrets["DATABASE_URL"]
+    if os.getenv("DATABASE_URL"):
+        return os.getenv("DATABASE_URL")
+    # Otherwise use Streamlit secrets (for production)
+    try:
+        import streamlit as st
+        return st.secrets["DATABASE_URL"]
+    except Exception as e:
+        raise RuntimeError("No DATABASE_URL found in environment or Streamlit secrets") from e
+
+# ✅ Resolve once after function is defined
 DATABASE_URL = get_database_url()
 
 # ✅ SQLAlchemy setup
