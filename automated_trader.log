@@ -745,3 +745,90 @@
 2025-07-10 06:53:52,014 - INFO - Signal added: ADAUSDT - Trend
 2025-07-10 06:55:25,872 - INFO - Database tables created successfully
 2025-07-10 06:57:00,400 - INFO - Database tables created successfully
+2025-07-10 06:57:35,381 - INFO - Automation settings loaded successfully
+2025-07-10 06:57:35,383 - INFO - Starting automated signal generation cycle
+2025-07-10 06:57:35,383 - INFO - Automated trading started
+2025-07-10 06:58:25,531 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 06:58:25,535 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 06:58:25,539 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 06:58:25,545 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 06:58:25,549 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 06:58:25,553 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 06:58:25,595 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 06:58:25,628 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 06:58:25,631 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 06:58:25,637 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 06:58:25,644 - INFO - Generated 5 automated signals
+2025-07-10 06:58:25,662 - INFO - Portfolio balance updated to $94.6102
+2025-07-10 06:58:25,667 - INFO - Trade added: BTCUSDT - P&L: $5.5516
+2025-07-10 06:58:30,236 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 06:58:30,237 - INFO - Executed automated trade: BTCUSDT | P&L: $5.5516
+2025-07-10 06:58:35,256 - INFO - Portfolio balance updated to $99.3258
+2025-07-10 06:58:35,260 - INFO - Trade added: ETHUSDT - P&L: $4.7156
+2025-07-10 06:58:36,793 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 06:58:36,794 - INFO - Executed automated trade: ETHUSDT | P&L: $4.7156
+2025-07-10 06:58:41,835 - INFO - Portfolio balance updated to $104.2858
+2025-07-10 06:58:41,839 - INFO - Trade added: BCHUSDT - P&L: $4.96
+2025-07-10 06:58:43,555 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 06:58:43,681 - INFO - Executed automated trade: BCHUSDT | P&L: $4.96
+2025-07-10 06:58:48,723 - INFO - Portfolio balance updated to $109.5001
+2025-07-10 06:58:48,733 - INFO - Trade added: XRPUSDT - P&L: $5.2143
+2025-07-10 06:58:50,493 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 06:58:50,494 - INFO - Executed automated trade: XRPUSDT | P&L: $5.2143
+2025-07-10 06:58:55,531 - INFO - Portfolio balance updated to $114.9753
+2025-07-10 06:58:55,542 - INFO - Trade added: LTCUSDT - P&L: $5.4752
+2025-07-10 06:58:56,895 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 06:58:56,897 - INFO - Executed automated trade: LTCUSDT | P&L: $5.4752
+2025-07-10 06:59:01,898 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 06:59:05,964 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 06:59:05,968 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 06:59:05,975 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 06:59:05,979 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 06:59:05,983 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 06:59:05,988 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 06:59:05,995 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 06:59:05,998 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 06:59:06,002 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 06:59:06,007 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 06:59:06,012 - INFO - Generated 5 automated signals
+2025-07-10 07:01:27,554 - INFO - Starting automated signal generation cycle
+2025-07-10 07:01:27,619 - WARNING - Daily trades limit reached: 35
+2025-07-10 07:01:27,620 - INFO - Trading paused due to risk limits
+2025-07-10 07:01:27,620 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 07:03:45,493 - INFO - Starting automated signal generation cycle
+2025-07-10 07:03:45,594 - WARNING - Daily trades limit reached: 35
+2025-07-10 07:03:45,607 - INFO - Trading paused due to risk limits
+2025-07-10 07:03:45,608 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 07:05:50,717 - INFO - Starting automated signal generation cycle
+2025-07-10 07:06:41,714 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 07:06:41,719 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 07:06:41,723 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 07:06:41,727 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 07:06:41,738 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 07:06:41,744 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 07:06:41,748 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 07:06:41,786 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 07:06:41,796 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 07:06:41,805 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 07:06:41,812 - INFO - Generated 5 automated signals
+2025-07-10 07:06:41,833 - INFO - Portfolio balance updated to $120.5233
+2025-07-10 07:06:41,840 - INFO - Trade added: BTCUSDT - P&L: $5.548
+2025-07-10 07:06:43,327 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 07:06:43,327 - INFO - Executed automated trade: BTCUSDT | P&L: $5.548
+2025-07-10 07:06:48,412 - INFO - Portfolio balance updated to $126.5451
+2025-07-10 07:06:48,419 - INFO - Trade added: ETHUSDT - P&L: $6.0218
+2025-07-10 07:06:49,898 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 07:06:49,899 - INFO - Executed automated trade: ETHUSDT | P&L: $6.0218
+2025-07-10 07:06:54,918 - INFO - Portfolio balance updated to $132.8738
+2025-07-10 07:06:54,922 - INFO - Trade added: BCHUSDT - P&L: $6.3287
+2025-07-10 07:06:56,743 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 07:06:56,744 - INFO - Executed automated trade: BCHUSDT | P&L: $6.3287
+2025-07-10 07:07:01,854 - INFO - Portfolio balance updated to $139.5175
+2025-07-10 07:07:01,858 - INFO - Trade added: XRPUSDT - P&L: $6.6437
+2025-07-10 07:07:03,366 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 07:07:03,368 - INFO - Executed automated trade: XRPUSDT | P&L: $6.6437
+2025-07-10 07:07:08,384 - INFO - Portfolio balance updated to $146.4943
+2025-07-10 07:07:08,387 - INFO - Trade added: LTCUSDT - P&L: $6.9768
+2025-07-10 07:07:09,656 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 07:07:09,657 - INFO - Executed automated trade: LTCUSDT | P&L: $6.9768
+2025-07-10 07:07:14,658 - INFO - Automation cycle completed. Next cycle in 900 seconds
