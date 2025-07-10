@@ -8,8 +8,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 import json
 
-
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = st.secrets["DATABASE_URL"]
 
 # ✅ Get DB URL from env or Streamlit secrets
 def get_database_url():
