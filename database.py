@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 import json
 
-
+DATABASE_URL=postgresql://postgres:1234@localhost:5432/Algotrader # type: ignore
 
 # SQLAlchemy setup
 engine = create_engine(
