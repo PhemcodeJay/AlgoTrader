@@ -16,6 +16,17 @@ from utils import format_currency, format_percentage, get_status_color
 from automated_trader import automated_trader
 from database import db_manager
 from data_provider import DataProvider
+from dashboard_components import DashboardComponents
+from utils import get_ticker_snapshot
+from streamlit_autorefresh import st_autorefresh
+
+# Refresh every 30 seconds (30000 milliseconds)
+st_autorefresh(interval=30000, limit=None, key="tickerrefresh")
+
+
+dashboard = DashboardComponents()
+ticker_data = get_ticker_snapshot()
+dashboard.render_ticker(ticker_data, position='top')
 
 
 # Configure page

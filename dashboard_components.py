@@ -166,3 +166,39 @@ class DashboardComponents:
 
         fig.update_layout(template="plotly_dark", height=800, xaxis_rangeslider_visible=False)
         return fig
+    
+    def render_ticker(self, ticker_data, position='top'):
+        if not ticker_data:
+            return
+
+        ticker_html = " | ".join([
+            f"<b>{item['symbol']}</b>: ${item['price']:.2f} "
+            f"(<span style='color:{'green' if item['change'] > 0 else 'red'}'>{item['change']:.2f}%</span>) "
+            f"Vol: ${item['volume'] / 1e6:.2f}M"
+            for item in ticker_data
+        ])
+
+        st.markdown(
+            f"""
+            <div style='
+                position: fixed;
+                { 'top' if position == 'top' else 'bottom' }: 0;
+                left: 0;
+                width: 100%;
+                background-color: #111;
+                color: #00ff99;
+                padding: 10px 0;
+                font-family: monospace;
+                font-size: 16px;
+                white-space: nowrap;
+                overflow: hidden;
+                z-index: 9999;
+            '>
+                <marquee behavior="scroll" direction="left" scrollamount="5">
+                    {ticker_html}
+                </marquee>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
