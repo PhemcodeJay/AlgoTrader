@@ -7,9 +7,7 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 import json
-from dotenv import load_dotenv
-# Load from .env (for local dev)
-load_dotenv()
+
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
