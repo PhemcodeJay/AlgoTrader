@@ -661,3 +661,14 @@
 2025-07-10 06:08:13,316 - WARNING - Daily trades limit reached: 30
 2025-07-10 06:08:13,330 - INFO - Trading paused due to risk limits
 2025-07-10 06:09:46,120 - INFO - Database tables created successfully
+2025-07-10 06:11:17,689 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 06:11:17,694 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 06:11:17,708 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 06:11:17,712 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 06:11:17,715 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 06:11:17,719 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 06:11:17,727 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 06:11:17,731 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 06:11:17,737 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 06:11:17,740 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 06:11:33,849 - INFO - Database tables created successfully

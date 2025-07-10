@@ -249,7 +249,7 @@ elif page == "💼 Portfolio":
         st.metric("Total Return", f"{format_percentage(total_return)}%")
     
     with col3:
-        daily_pnl = sum(t['pnl'] for t in trades if t['timestamp'].startswith(datetime.utcnow().strftime("%Y-%m-%d")))
+        daily_pnl = sum(t['pnl'] for t in trades if t['timestamp'].startswith(datetime.now().strftime("%Y-%m-%d")))
         st.metric("Daily P&L", f"${format_currency(daily_pnl)}")
     
     with col4:

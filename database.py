@@ -7,10 +7,6 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 import json
 
-
-
-
-
 # Database configuration
 DATABASE_URL = os.getenv('DATABASE_URL')
 user = os.getenv("DB_USER")
