@@ -299,3 +299,78 @@
 2025-07-10 02:43:51,727 - INFO - Trading paused due to risk limits
 2025-07-10 02:43:51,729 - INFO - Automation cycle completed. Next cycle in 300 seconds
 2025-07-10 02:46:14,488 - INFO - Starting automated signal generation cycle
+2025-07-10 03:05:00,916 - INFO - Automation settings loaded successfully
+2025-07-10 03:05:00,950 - INFO - Starting automated signal generation cycle
+2025-07-10 03:05:00,950 - INFO - Automated trading started
+2025-07-10 03:07:47,341 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 03:07:47,346 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 03:07:47,353 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 03:07:47,356 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 03:07:47,408 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 03:07:47,418 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 03:07:47,422 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 03:07:47,435 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 03:07:47,445 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 03:07:47,491 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 03:07:47,500 - INFO - Generated 5 automated signals
+2025-07-10 03:07:47,555 - INFO - Portfolio balance updated to $21.8802
+2025-07-10 03:07:47,573 - INFO - Trade added: BTCUSDT - P&L: $0.0
+2025-07-10 03:07:50,319 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 03:07:50,320 - INFO - Executed automated trade: BTCUSDT | P&L: $0.0
+2025-07-10 03:07:55,343 - INFO - Portfolio balance updated to $22.9886
+2025-07-10 03:07:55,347 - INFO - Trade added: ETHUSDT - P&L: $1.1084
+2025-07-10 03:07:56,971 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 03:07:56,972 - INFO - Executed automated trade: ETHUSDT | P&L: $1.1084
+2025-07-10 03:08:02,002 - INFO - Portfolio balance updated to $24.1354
+2025-07-10 03:08:02,006 - INFO - Trade added: BCHUSDT - P&L: $1.1468
+2025-07-10 03:08:03,882 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 03:08:03,882 - INFO - Executed automated trade: BCHUSDT | P&L: $1.1468
+2025-07-10 03:08:08,899 - INFO - Portfolio balance updated to $25.3422
+2025-07-10 03:08:08,902 - INFO - Trade added: XRPUSDT - P&L: $1.2068
+2025-07-10 03:08:10,452 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 03:08:10,454 - INFO - Executed automated trade: XRPUSDT | P&L: $1.2068
+2025-07-10 03:08:15,489 - INFO - Portfolio balance updated to $26.6097
+2025-07-10 03:08:15,496 - INFO - Trade added: LTCUSDT - P&L: $1.2675
+2025-07-10 03:08:17,015 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 03:08:17,016 - INFO - Executed automated trade: LTCUSDT | P&L: $1.2675
+2025-07-10 03:08:22,017 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 03:10:22,021 - INFO - Starting automated signal generation cycle
+2025-07-10 03:13:06,234 - INFO - Signal added: BTCUSDT - Trend
+2025-07-10 03:13:06,320 - INFO - Signal added: ETHUSDT - Trend
+2025-07-10 03:13:06,413 - INFO - Signal added: BCHUSDT - Trend
+2025-07-10 03:13:06,447 - INFO - Signal added: XRPUSDT - Trend
+2025-07-10 03:13:06,468 - INFO - Signal added: LTCUSDT - Trend
+2025-07-10 03:13:06,472 - INFO - Signal added: TRXUSDT - Trend
+2025-07-10 03:13:06,477 - INFO - Signal added: ETCUSDT - Trend
+2025-07-10 03:13:06,503 - INFO - Signal added: LINKUSDT - Trend
+2025-07-10 03:13:06,690 - INFO - Signal added: XLMUSDT - Trend
+2025-07-10 03:13:06,694 - INFO - Signal added: ADAUSDT - Trend
+2025-07-10 03:13:06,700 - INFO - Generated 5 automated signals
+2025-07-10 03:13:06,759 - INFO - Portfolio balance updated to $26.6097
+2025-07-10 03:13:06,766 - INFO - Trade added: BTCUSDT - P&L: $0.0
+2025-07-10 03:13:08,726 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 03:13:08,773 - INFO - Executed automated trade: BTCUSDT | P&L: $0.0
+2025-07-10 03:13:13,814 - INFO - Database tables created successfully
+2025-07-10 03:13:13,963 - INFO - Portfolio balance updated to $27.9236
+2025-07-10 03:13:14,609 - INFO - Trade added: ETHUSDT - P&L: $1.3139
+2025-07-10 03:13:16,260 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 03:13:16,332 - INFO - Executed automated trade: ETHUSDT | P&L: $1.3139
+2025-07-10 03:13:21,559 - INFO - Portfolio balance updated to $29.3149
+2025-07-10 03:13:21,599 - INFO - Trade added: BCHUSDT - P&L: $1.3913
+2025-07-10 03:13:23,176 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 03:13:23,177 - INFO - Executed automated trade: BCHUSDT | P&L: $1.3913
+2025-07-10 03:13:28,202 - INFO - Portfolio balance updated to $30.7807
+2025-07-10 03:13:28,206 - INFO - Trade added: XRPUSDT - P&L: $1.4658
+2025-07-10 03:13:29,726 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 03:13:29,727 - INFO - Executed automated trade: XRPUSDT | P&L: $1.4658
+2025-07-10 03:13:34,798 - INFO - Portfolio balance updated to $32.3208
+2025-07-10 03:13:34,832 - INFO - Trade added: LTCUSDT - P&L: $1.5401
+2025-07-10 03:13:36,699 - WARNING - Social media posting failed: Reddit posting failed: invalid_grant error processing request
+2025-07-10 03:13:36,700 - INFO - Executed automated trade: LTCUSDT | P&L: $1.5401
+2025-07-10 03:13:41,713 - INFO - Automation cycle completed. Next cycle in 300 seconds
+2025-07-10 03:15:17,997 - INFO - Database tables created successfully
+2025-07-10 03:15:41,821 - INFO - Starting automated signal generation cycle
+2025-07-10 03:18:06,800 - INFO - Automation settings saved successfully
+2025-07-10 03:18:06,800 - INFO - Automation settings updated successfully
+2025-07-10 03:18:09,655 - INFO - Automation settings saved successfully
+2025-07-10 03:18:09,656 - INFO - Automation settings updated successfully
