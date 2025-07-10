@@ -26,7 +26,7 @@ st_autorefresh(interval=30000, limit=None, key="tickerrefresh")
 dashboard = DashboardComponents()
 ticker_data = get_ticker_snapshot()
 # ⬆️ Show at top
-dashboard.render_ticker_bar(ticker_data, position='top')
+dashboard.render_ticker(ticker_data, position='top')
 
 # Configure page
 st.set_page_config(
