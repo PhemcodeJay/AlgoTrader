@@ -635,3 +635,12 @@
 2025-07-10 05:35:16,089 - WARNING - Daily trades limit reached: 30
 2025-07-10 05:35:16,090 - INFO - Trading paused due to risk limits
 2025-07-10 05:35:16,091 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 05:48:43,532 - INFO - Starting automated signal generation cycle
+2025-07-10 05:48:43,617 - WARNING - Daily trades limit reached: 30
+2025-07-10 05:48:43,625 - INFO - Trading paused due to risk limits
+2025-07-10 05:48:43,626 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 05:50:16,181 - INFO - Starting automated signal generation cycle
+2025-07-10 05:50:16,206 - WARNING - Daily trades limit reached: 30
+2025-07-10 05:50:16,212 - INFO - Trading paused due to risk limits
+2025-07-10 05:50:16,212 - INFO - Automation cycle completed. Next cycle in 900 seconds
+2025-07-10 05:59:25,001 - INFO - Database tables created successfully
