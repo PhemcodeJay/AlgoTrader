@@ -7136,3 +7136,1426 @@ HINT:  You will need to rewrite or cast the expression.
 2025-07-11 06:01:20,369 - WARNING - Social media posting failed: Reddit credentials not configured
 2025-07-11 06:01:20,369 - INFO - Executed automated trade: BCHUSDT | P&L: $23.4773
 2025-07-11 06:01:25,370 - INFO - Automation cycle completed. Next cycle in 60 seconds
+2025-07-11 06:02:25,438 - INFO - Starting automated signal generation cycle
+2025-07-11 06:03:53,798 - ERROR - SQLAlchemy error adding signal: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...6.5, 145683.125, 104891.85, 110719.175, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'BTCUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 116546.5, 'tp_price': 145683.125, 'sl_price': 104891.85, 'liquidation_price': 110719.175, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 38.44, 36.15, 23.15, 21.63, 26.81, 27.97, 29.36, 29.9, 28.68, 37. ... (375 characters truncated) ... .21, 66.04, 68.96, 66.65, 38.21, 58.79, 54.64, 34.08, 35.58, 59.75, 56.51, 75.64, 85.85, 78.99, 77.28, 77.58, 87.16, 81.69, 83.71, 78.96, 80.6, 83.66], 'macd_hist': 287.4043, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 53, 787640, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...6.5, 145683.125, 104891.85, 110719.175, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Repositories\AlgoTrader\database.py", line 277, in add_signal
+    session.commit()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...6.5, 145683.125, 104891.85, 110719.175, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'BTCUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 116546.5, 'tp_price': 145683.125, 'sl_price': 104891.85, 'liquidation_price': 110719.175, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 38.44, 36.15, 23.15, 21.63, 26.81, 27.97, 29.36, 29.9, 28.68, 37. ... (375 characters truncated) ... .21, 66.04, 68.96, 66.65, 38.21, 58.79, 54.64, 34.08, 35.58, 59.75, 56.51, 75.64, 85.85, 78.99, 77.28, 77.58, 87.16, 81.69, 83.71, 78.96, 80.6, 83.66], 'macd_hist': 287.4043, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 53, 787640, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-11 06:03:53,864 - ERROR - SQLAlchemy error adding signal: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...6.5, 145683.125, 104891.85, 110719.175, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'BTCUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 116546.5, 'tp_price': 145683.125, 'sl_price': 104891.85, 'liquidation_price': 110719.175, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 38.44, 36.15, 23.15, 21.63, 26.81, 27.97, 29.36, 29.9, 28.68, 37. ... (375 characters truncated) ... .21, 66.04, 68.96, 66.65, 38.21, 58.79, 54.64, 34.08, 35.58, 59.75, 56.51, 75.64, 85.85, 78.99, 77.28, 77.58, 87.16, 81.69, 83.71, 78.96, 80.6, 83.66], 'macd_hist': 287.4043, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 53, 861395, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...6.5, 145683.125, 104891.85, 110719.175, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Repositories\AlgoTrader\database.py", line 277, in add_signal
+    session.commit()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...6.5, 145683.125, 104891.85, 110719.175, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'BTCUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 116546.5, 'tp_price': 145683.125, 'sl_price': 104891.85, 'liquidation_price': 110719.175, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 38.44, 36.15, 23.15, 21.63, 26.81, 27.97, 29.36, 29.9, 28.68, 37. ... (375 characters truncated) ... .21, 66.04, 68.96, 66.65, 38.21, 58.79, 54.64, 34.08, 35.58, 59.75, 56.51, 75.64, 85.85, 78.99, 77.28, 77.58, 87.16, 81.69, 83.71, 78.96, 80.6, 83.66], 'macd_hist': 287.4043, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 53, 861395, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-11 06:03:53,907 - ERROR - SQLAlchemy error adding signal: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 2961.76, 3702.2, 2665.584, 2813.672, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'ETHUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 2961.76, 'tp_price': 3702.2, 'sl_price': 2665.584, 'liquidation_price': 2813.672, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 39.52, 39.7, 31.4, 35.17, 40.73, 41.66, 40.11, 37.22, 33.38, 39.3 ... (365 characters truncated) ... 8, 75.1, 75.5, 75.51, 67.73, 54.3, 66.45, 59.4, 49.12, 57.75, 60.08, 47.12, 60.78, 71.0, 61.21, 61.7, 58.52, 81.84, 82.57, 79.05, 75.04, 77.84, 78.57], 'macd_hist': 9.5584, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 53, 905374, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 2961.76, 3702.2, 2665.584, 2813.672, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Repositories\AlgoTrader\database.py", line 277, in add_signal
+    session.commit()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 2961.76, 3702.2, 2665.584, 2813.672, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'ETHUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 2961.76, 'tp_price': 3702.2, 'sl_price': 2665.584, 'liquidation_price': 2813.672, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 39.52, 39.7, 31.4, 35.17, 40.73, 41.66, 40.11, 37.22, 33.38, 39.3 ... (365 characters truncated) ... 8, 75.1, 75.5, 75.51, 67.73, 54.3, 66.45, 59.4, 49.12, 57.75, 60.08, 47.12, 60.78, 71.0, 61.21, 61.7, 58.52, 81.84, 82.57, 79.05, 75.04, 77.84, 78.57], 'macd_hist': 9.5584, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 53, 905374, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-11 06:03:53,936 - ERROR - SQLAlchemy error adding signal: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 2961.76, 3702.2, 2665.584, 2813.672, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'ETHUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 2961.76, 'tp_price': 3702.2, 'sl_price': 2665.584, 'liquidation_price': 2813.672, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 39.52, 39.7, 31.4, 35.17, 40.73, 41.66, 40.11, 37.22, 33.38, 39.3 ... (365 characters truncated) ... 8, 75.1, 75.5, 75.51, 67.73, 54.3, 66.45, 59.4, 49.12, 57.75, 60.08, 47.12, 60.78, 71.0, 61.21, 61.7, 58.52, 81.84, 82.57, 79.05, 75.04, 77.84, 78.57], 'macd_hist': 9.5584, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 53, 934964, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 2961.76, 3702.2, 2665.584, 2813.672, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Repositories\AlgoTrader\database.py", line 277, in add_signal
+    session.commit()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 2961.76, 3702.2, 2665.584, 2813.672, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'ETHUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 2961.76, 'tp_price': 3702.2, 'sl_price': 2665.584, 'liquidation_price': 2813.672, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 39.52, 39.7, 31.4, 35.17, 40.73, 41.66, 40.11, 37.22, 33.38, 39.3 ... (365 characters truncated) ... 8, 75.1, 75.5, 75.51, 67.73, 54.3, 66.45, 59.4, 49.12, 57.75, 60.08, 47.12, 60.78, 71.0, 61.21, 61.7, 58.52, 81.84, 82.57, 79.05, 75.04, 77.84, 78.57], 'macd_hist': 9.5584, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 53, 934964, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-11 06:03:53,967 - ERROR - SQLAlchemy error adding signal: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 520.29, 650.3625, 468.261, 494.2755, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'BCHUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 520.29, 'tp_price': 650.3625, 'sl_price': 468.261, 'liquidation_price': 494.2755, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 51.29, 34.29, 27.13, 26.45, 34.45, 36.55, 39.94, 42.2, 47.74, 51. ... (369 characters truncated) ... .85, 60.83, 71.01, 71.07, 65.77, 72.11, 62.44, 54.78, 37.08, 31.98, 35.32, 42.24, 49.75, 46.98, 49.68, 44.04, 55.1, 53.57, 51.84, 49.15, 53.61, 56.78], 'macd_hist': 0.8273, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 53, 965168, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 520.29, 650.3625, 468.261, 494.2755, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Repositories\AlgoTrader\database.py", line 277, in add_signal
+    session.commit()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 520.29, 650.3625, 468.261, 494.2755, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'BCHUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 520.29, 'tp_price': 650.3625, 'sl_price': 468.261, 'liquidation_price': 494.2755, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 51.29, 34.29, 27.13, 26.45, 34.45, 36.55, 39.94, 42.2, 47.74, 51. ... (369 characters truncated) ... .85, 60.83, 71.01, 71.07, 65.77, 72.11, 62.44, 54.78, 37.08, 31.98, 35.32, 42.24, 49.75, 46.98, 49.68, 44.04, 55.1, 53.57, 51.84, 49.15, 53.61, 56.78], 'macd_hist': 0.8273, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 53, 965168, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-11 06:03:54,004 - ERROR - SQLAlchemy error adding signal: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 520.29, 650.3625, 468.261, 494.2755, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'BCHUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 520.29, 'tp_price': 650.3625, 'sl_price': 468.261, 'liquidation_price': 494.2755, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 51.29, 34.29, 27.13, 26.45, 34.45, 36.55, 39.94, 42.2, 47.74, 51. ... (369 characters truncated) ... .85, 60.83, 71.01, 71.07, 65.77, 72.11, 62.44, 54.78, 37.08, 31.98, 35.32, 42.24, 49.75, 46.98, 49.68, 44.04, 55.1, 53.57, 51.84, 49.15, 53.61, 56.78], 'macd_hist': 0.8273, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 54, 2175, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 520.29, 650.3625, 468.261, 494.2755, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Repositories\AlgoTrader\database.py", line 277, in add_signal
+    session.commit()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...', 520.29, 650.3625, 468.261, 494.2755, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'BCHUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 520.29, 'tp_price': 650.3625, 'sl_price': 468.261, 'liquidation_price': 494.2755, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 51.29, 34.29, 27.13, 26.45, 34.45, 36.55, 39.94, 42.2, 47.74, 51. ... (369 characters truncated) ... .85, 60.83, 71.01, 71.07, 65.77, 72.11, 62.44, 54.78, 37.08, 31.98, 35.32, 42.24, 49.75, 46.98, 49.68, 44.04, 55.1, 53.57, 51.84, 49.15, 53.61, 56.78], 'macd_hist': 0.8273, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 54, 2175, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-11 06:03:54,033 - ERROR - SQLAlchemy error adding signal: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ... '1h', 2.5792, 3.224, 2.32128, 2.45024, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'XRPUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 2.5792, 'tp_price': 3.224, 'sl_price': 2.32128, 'liquidation_price': 2.45024, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 63.99, 68.64, 61.59, 58.39, 56.75, 56.42, 51.31, 51.33, 49.68, 47 ... (374 characters truncated) ... .64, 60.1, 65.02, 65.61, 57.13, 66.98, 65.63, 59.45, 58.09, 65.54, 59.18, 68.69, 74.68, 70.32, 74.51, 74.42, 78.29, 76.77, 79.19, 72.55, 74.48, 81.22], 'macd_hist': 0.0066, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 54, 31275, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ... '1h', 2.5792, 3.224, 2.32128, 2.45024, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Repositories\AlgoTrader\database.py", line 277, in add_signal
+    session.commit()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ... '1h', 2.5792, 3.224, 2.32128, 2.45024, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'XRPUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 2.5792, 'tp_price': 3.224, 'sl_price': 2.32128, 'liquidation_price': 2.45024, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 63.99, 68.64, 61.59, 58.39, 56.75, 56.42, 51.31, 51.33, 49.68, 47 ... (374 characters truncated) ... .64, 60.1, 65.02, 65.61, 57.13, 66.98, 65.63, 59.45, 58.09, 65.54, 59.18, 68.69, 74.68, 70.32, 74.51, 74.42, 78.29, 76.77, 79.19, 72.55, 74.48, 81.22], 'macd_hist': 0.0066, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 54, 31275, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-11 06:03:54,065 - ERROR - SQLAlchemy error adding signal: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ... '1h', 2.5792, 3.224, 2.32128, 2.45024, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'XRPUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 2.5792, 'tp_price': 3.224, 'sl_price': 2.32128, 'liquidation_price': 2.45024, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 63.99, 68.64, 61.59, 58.39, 56.75, 56.42, 51.31, 51.33, 49.68, 47 ... (374 characters truncated) ... .64, 60.1, 65.02, 65.61, 57.13, 66.98, 65.63, 59.45, 58.09, 65.54, 59.18, 68.69, 74.68, 70.32, 74.51, 74.42, 78.29, 76.77, 79.19, 72.55, 74.48, 81.22], 'macd_hist': 0.0066, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 54, 63771, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ... '1h', 2.5792, 3.224, 2.32128, 2.45024, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Repositories\AlgoTrader\database.py", line 277, in add_signal
+    session.commit()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ... '1h', 2.5792, 3.224, 2.32128, 2.45024, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'XRPUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 2.5792, 'tp_price': 3.224, 'sl_price': 2.32128, 'liquidation_price': 2.45024, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 63.99, 68.64, 61.59, 58.39, 56.75, 56.42, 51.31, 51.33, 49.68, 47 ... (374 characters truncated) ... .64, 60.1, 65.02, 65.61, 57.13, 66.98, 65.63, 59.45, 58.09, 65.54, 59.18, 68.69, 74.68, 70.32, 74.51, 74.42, 78.29, 76.77, 79.19, 72.55, 74.48, 81.22], 'macd_hist': 0.0066, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 54, 63771, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-11 06:03:54,102 - ERROR - SQLAlchemy error adding signal: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...'1h', 95.49, 119.3625, 85.941, 90.7155, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'LTCUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 95.49, 'tp_price': 119.3625, 'sl_price': 85.941, 'liquidation_price': 90.7155, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 38.26, 36.24, 26.21, 27.65, 25.0, 29.67, 30.61, 25.73, 25.98, 30. ... (371 characters truncated) ... 04, 67.46, 71.19, 71.52, 55.75, 54.65, 55.15, 44.84, 50.93, 61.86, 56.88, 59.25, 75.95, 77.78, 79.45, 81.18, 86.79, 86.96, 89.94, 77.72, 81.63, 84.26], 'macd_hist': 0.2298, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 54, 100854, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...'1h', 95.49, 119.3625, 85.941, 90.7155, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Repositories\AlgoTrader\database.py", line 277, in add_signal
+    session.commit()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...'1h', 95.49, 119.3625, 85.941, 90.7155, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'LTCUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 95.49, 'tp_price': 119.3625, 'sl_price': 85.941, 'liquidation_price': 90.7155, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 38.26, 36.24, 26.21, 27.65, 25.0, 29.67, 30.61, 25.73, 25.98, 30. ... (371 characters truncated) ... 04, 67.46, 71.19, 71.52, 55.75, 54.65, 55.15, 44.84, 50.93, 61.86, 56.88, 59.25, 75.95, 77.78, 79.45, 81.18, 86.79, 86.96, 89.94, 77.72, 81.63, 84.26], 'macd_hist': 0.2298, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 54, 100854, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-11 06:03:54,133 - ERROR - SQLAlchemy error adding signal: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...'1h', 95.49, 119.3625, 85.941, 90.7155, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'LTCUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 95.49, 'tp_price': 119.3625, 'sl_price': 85.941, 'liquidation_price': 90.7155, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 38.26, 36.24, 26.21, 27.65, 25.0, 29.67, 30.61, 25.73, 25.98, 30. ... (371 characters truncated) ... 04, 67.46, 71.19, 71.52, 55.75, 54.65, 55.15, 44.84, 50.93, 61.86, 56.88, 59.25, 75.95, 77.78, 79.45, 81.18, 86.79, 86.96, 89.94, 77.72, 81.63, 84.26], 'macd_hist': 0.2298, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 54, 131430, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...'1h', 95.49, 119.3625, 85.941, 90.7155, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Repositories\AlgoTrader\database.py", line 277, in add_signal
+    session.commit()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Phemcode\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.DatatypeMismatch) column "rsi" is of type double precision but expression is of type numeric[]
+LINE 1: ...'1h', 95.49, 119.3625, 85.941, 90.7155, 90, 98.0, ARRAY[NULL...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO signals (symbol, side, strategy, timeframe, entry_price, tp_price, sl_price, liquidation_price, confidence, score, rsi, macd_hist, bb_breakout, trend, regime, vol_spike, generated_at, is_active, signal_metadata) VALUES (%(symbol)s, %(side)s, %(strategy)s, %(timeframe)s, %(entry_price)s, %(tp_price)s, %(sl_price)s, %(liquidation_price)s, %(confidence)s, %(score)s, %(rsi)s, %(macd_hist)s, %(bb_breakout)s, %(trend)s, %(regime)s, %(vol_spike)s, %(generated_at)s, %(is_active)s, %(signal_metadata)s::JSON) RETURNING signals.id]
+[parameters: {'symbol': 'LTCUSDT', 'side': 'LONG', 'strategy': 'Trend', 'timeframe': '1h', 'entry_price': 95.49, 'tp_price': 119.3625, 'sl_price': 85.941, 'liquidation_price': 90.7155, 'confidence': 90, 'score': 98.0, 'rsi': [None, None, None, None, None, None, None, None, None, None, None, None, None, None, 38.26, 36.24, 26.21, 27.65, 25.0, 29.67, 30.61, 25.73, 25.98, 30. ... (371 characters truncated) ... 04, 67.46, 71.19, 71.52, 55.75, 54.65, 55.15, 44.84, 50.93, 61.86, 56.88, 59.25, 75.95, 77.78, 79.45, 81.18, 86.79, 86.96, 89.94, 77.72, 81.63, 84.26], 'macd_hist': 0.2298, 'bb_breakout': 'NO', 'trend': 'bullish', 'regime': 'trend', 'vol_spike': False, 'generated_at': datetime.datetime(2025, 7, 11, 3, 3, 54, 131430, tzinfo=datetime.timezone.utc), 'is_active': True, 'signal_metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-11 06:03:54,163 - INFO - Generated 5 automated signals
+2025-07-11 06:03:54,201 - INFO - Portfolio balance updated to $516.4537
+2025-07-11 06:03:54,204 - INFO - Trade added: BTCUSDT - P&L: $23.3093
+2025-07-11 06:03:54,208 - WARNING - Social media posting failed: Reddit credentials not configured
+2025-07-11 06:03:54,209 - INFO - Executed automated trade: BTCUSDT | P&L: $23.3093
+2025-07-11 06:03:59,261 - INFO - Portfolio balance updated to $542.6767
+2025-07-11 06:03:59,266 - INFO - Trade added: BTCUSDT - P&L: $26.223
+2025-07-11 06:03:59,270 - WARNING - Social media posting failed: Reddit credentials not configured
+2025-07-11 06:03:59,271 - INFO - Executed automated trade: BTCUSDT | P&L: $26.223
+2025-07-11 06:04:04,296 - INFO - Portfolio balance updated to $569.7768
+2025-07-11 06:04:04,303 - INFO - Trade added: ETHUSDT - P&L: $27.1001
+2025-07-11 06:04:04,311 - WARNING - Social media posting failed: Reddit credentials not configured
+2025-07-11 06:04:04,312 - INFO - Executed automated trade: ETHUSDT | P&L: $27.1001
+2025-07-11 06:04:09,354 - INFO - Portfolio balance updated to $598.2837
+2025-07-11 06:04:09,359 - INFO - Trade added: ETHUSDT - P&L: $28.5069
+2025-07-11 06:04:09,362 - WARNING - Social media posting failed: Reddit credentials not configured
+2025-07-11 06:04:09,362 - INFO - Executed automated trade: ETHUSDT | P&L: $28.5069
+2025-07-11 06:04:14,396 - INFO - Portfolio balance updated to $628.2004
+2025-07-11 06:04:14,443 - INFO - Trade added: BCHUSDT - P&L: $29.9167
+2025-07-11 06:04:14,465 - WARNING - Social media posting failed: Reddit credentials not configured
+2025-07-11 06:04:14,556 - INFO - Executed automated trade: BCHUSDT | P&L: $29.9167
+2025-07-11 06:04:19,901 - INFO - Automation cycle completed. Next cycle in 60 seconds
