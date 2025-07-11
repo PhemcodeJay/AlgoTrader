@@ -833,12 +833,3 @@ if auto_refresh:
     time.sleep(900)
     st.rerun()
     
-def main():
-    pass  # App logic runs above; this is just for deployment health checks
-
-if __name__ == "__main__":
-    print("✅ Streamlit AlgoTrader app started...")
-    main()
-# End of app.py
-# This is the main entry point for the Streamlit app.
-# It initializes components, sets up the sidebar, and handles page navigation.
