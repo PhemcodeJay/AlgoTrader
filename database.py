@@ -244,52 +244,60 @@ class DatabaseManager:
         """Add a new signal to the database"""
         session = self.get_session()
         try:
-            # Ensure 'metadata' is a dict if present
+            # Parse metadata if it's a string
             metadata = signal_data.get('metadata', {})
             if isinstance(metadata, str):
                 try:
                     metadata = json.loads(metadata)
                 except json.JSONDecodeError:
-                    self.logger.warning("Failed to parse metadata JSON string, defaulting to empty dict.")
+                    self.logger.warning("Metadata JSON decode failed. Defaulting to empty dict.")
                     metadata = {}
 
+            # Convert types safely
+            def safe_float(val, default=0.0):
+                try:
+                    return float(val)
+                except (ValueError, TypeError):
+                    return default
+
             signal = Signal(
-                symbol=signal_data['symbol'],
-                side=signal_data['side'],
-                strategy=signal_data['strategy'],
-                timeframe=signal_data['timeframe'],
-                entry_price=signal_data['entry'],
-                tp_price=signal_data['tp'],
-                sl_price=signal_data['sl'],
-                liquidation_price=signal_data.get('liquidation'),  # can be None
-                confidence=signal_data['confidence'],
-                score=signal_data['score'],
-                rsi=signal_data.get('rsi'),  # can be list or None
-                macd_hist=signal_data.get('macd_hist'),
-                bb_breakout=signal_data.get('bb_breakout'),
-                trend=signal_data.get('trend'),
-                regime=signal_data.get('regime'),
-                vol_spike=signal_data.get('vol_spike', False),
+                symbol=str(signal_data['symbol']),
+                side=str(signal_data['side']),
+                strategy=str(signal_data['strategy']),
+                timeframe=str(signal_data['timeframe']),
+                entry_price=safe_float(signal_data['entry']),
+                tp_price=safe_float(signal_data['tp']),
+                sl_price=safe_float(signal_data['sl']),
+                liquidation_price=safe_float(signal_data.get('liquidation')) if signal_data.get('liquidation') else None,
+                confidence=safe_float(signal_data['confidence']),
+                score=safe_float(signal_data['score']),
+                rsi=safe_float(signal_data.get('rsi')),
+                macd_hist=safe_float(signal_data.get('macd_hist')),
+                bb_breakout=str(signal_data.get('bb_breakout')) if signal_data.get('bb_breakout') else None,
+                trend=str(signal_data.get('trend')) if signal_data.get('trend') else None,
+                regime=str(signal_data.get('regime')) if signal_data.get('regime') else None,
+                vol_spike=bool(signal_data.get('vol_spike', False)),
                 signal_metadata=metadata
             )
 
             session.add(signal)
             session.commit()
-            self.logger.info(f"Signal added: {signal.symbol} - {signal.strategy}")
+            self.logger.info(f"✅ Signal saved to DB: {signal.symbol} | {signal.strategy} | {signal.timeframe}")
             return True
 
         except SQLAlchemyError as e:
-            self.logger.error(f"SQLAlchemy error adding signal: {str(e)}", exc_info=True)
+            self.logger.error(f"❌ SQLAlchemy error saving signal: {str(e)}", exc_info=True)
             session.rollback()
             return False
 
         except Exception as e:
-            self.logger.error(f"Unexpected error adding signal: {str(e)}", exc_info=True)
+            self.logger.error(f"❌ Unexpected error saving signal: {str(e)}", exc_info=True)
             session.rollback()
             return False
 
         finally:
             session.close()
+
     
     def get_signals(self, limit: int = 10, active_only: bool = True) -> list:
         """Get signals from database"""
