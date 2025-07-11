@@ -1,13 +1,17 @@
 # Core UI & App
 streamlit
+streamlit-autorefresh
 python-dotenv
 requests
 pandas
+numpy
 matplotlib
 plotly
+Pillow
+
+# PDF & Report Generation
 fpdf
 pdfkit
-Pillow
 
 # Market Data
 yfinance
