@@ -351,7 +351,7 @@ elif page == "📈 Charts":
             st.error(f"Failed to load data for {selected_symbol}")
 
 elif page == "🤖 Automation":
-    st.title("🤖 AlgoTrading System")
+    st.title("🤖 AlgoTrader System")
     
     # Get automation status
     automation_status = automated_trader.get_automation_status()
@@ -667,6 +667,39 @@ elif page == "🗄️ Database":
                         st.dataframe(df[['symbol', 'side', 'confidence', 'strategy', 'timestamp']], use_container_width=True)
                 except Exception as e:
                     st.error(f"Error loading {table}: {e}")
+                    
+            elif table == "portfolio":
+                try:
+                    records = db_manager.get_portfolio(limit=10)
+                    if records:
+                        st.write("**Recent Records:**")
+                        df = pd.DataFrame(records)
+                        st.dataframe(df[['balance', 'timestamp']], use_container_width=True)
+                except Exception as e:
+                    st.error(f"Error loading {table}: {e}")
+                    
+            elif table == "automation_stats":
+                try:
+                    records = db_manager.get_automation_stats(limit=10)
+                    if records:
+                        st.write("**Recent Records:**")
+                        df = pd.DataFrame(records)
+                        st.dataframe(df[['total_signals', 'profit', 'loss', 'timestamp']], use_container_width=True)
+                except Exception as e:
+                    st.error(f"Error loading {table}: {e}")
+                    
+            elif table == "system_settings":
+                try:
+                    records = db_manager.get_settings()
+                    if records:
+                        st.write("**Current Settings:**")
+                        df = pd.DataFrame([r.__dict__ for r in records])
+                        st.dataframe(df[['key', 'value']], use_container_width=True)
+                except Exception as e:
+                    st.error(f"Error loading {table}: {e}")
+      
+        
+                  
     
     # Advanced Options
     with st.expander("🔧 Advanced Options"):
@@ -828,6 +861,6 @@ elif page == "⚙️ Settings":
 
 # Auto refresh functionality
 if auto_refresh:
-    time.sleep(300)
+    time.sleep(600)
     st.rerun()
     
