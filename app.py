@@ -57,7 +57,7 @@ st.sidebar.markdown("---")
 
 page = st.sidebar.selectbox(
     "Navigate",
-    ["🏠 Dashboard", "📊 Signals", "💼 Portfolio", "📈 Charts", "🤖 AlgoTrade", "🗄️ Records", "⚙️ Settings"]
+    ["🏠 Dashboard", "📊 Signals", "💼 Portfolio", "📈 Charts", "🤖 Automation", "🗄️ Database", "⚙️ Settings"]
 )
 
 # Auto-refresh toggle

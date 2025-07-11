@@ -2,3 +2,5 @@ automated_trader.log
 __pycache__/
 .env
 production/
+algotrader.sql
+algotrader-sql.sql
