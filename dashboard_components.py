@@ -172,11 +172,12 @@ class DashboardComponents:
             return
 
         ticker_html = " | ".join([
-            f"<b>{item['symbol']}</b>: ${item['price']:.2f} "
-            f"(<span style='color:{'green' if item['change'] > 0 else 'red'}'>{item['change']:.2f}%</span>) "
-            f"Vol: ${item['volume'] / 1e6:.2f}M"
+            f"<b>{item['symbol']}</b>: ${item['price']:,.2f} "
+            f"(<span style='color:{'green' if item['change'] > 0 else 'red'}'>{item['change']:,.2f}%</span>) "
+            f"Vol: ${item['volume']:,.0f}"
             for item in ticker_data
         ])
+
 
         st.markdown(
             f"""
@@ -186,7 +187,7 @@ class DashboardComponents:
                 left: 0;
                 width: 100%;
                 background-color: #111;
-                color: #00ff99;
+                color: #87CEEB;
                 padding: 10px 0;
                 font-family: monospace;
                 font-size: 16px;
