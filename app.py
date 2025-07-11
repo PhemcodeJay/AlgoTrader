@@ -51,8 +51,8 @@ def init_components():
 trading_engine, dashboard, data_provider = init_components()
 
 # Sidebar Navigation
-st.image(logo, width=100)
-st.sidebar.title("AlgoTrader")
+st.image(logo, width=50)
+st.sidebar.title("🚀 AlgoTrader")
 st.sidebar.markdown("---")
 
 page = st.sidebar.selectbox(

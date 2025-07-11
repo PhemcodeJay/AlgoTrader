@@ -31,7 +31,7 @@ def get_status_color(daily_pnl_pct):
     elif daily_pnl_pct > 0:
         return "#90EE90"  # Light green
     elif daily_pnl_pct > -5:
-        return "#FFD700"  # Gold/yellow
+        return "#917C09"  # Gold/yellow
     elif daily_pnl_pct > -10:
         return "#FFA500"  # Orange
     else:

@@ -6,6 +6,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, 
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
+from sqlalchemy.exc import SQLAlchemyError
 import json
 
 
@@ -243,10 +244,14 @@ class DatabaseManager:
         """Add a new signal to the database"""
         session = self.get_session()
         try:
-            # Ensure metadata is a Python dict
-            if isinstance(signal_data.get('metadata'), str):
-                import json
-                signal_data['metadata'] = json.loads(signal_data['metadata'])
+            # Ensure 'metadata' is a dict if present
+            metadata = signal_data.get('metadata', {})
+            if isinstance(metadata, str):
+                try:
+                    metadata = json.loads(metadata)
+                except json.JSONDecodeError:
+                    self.logger.warning("Failed to parse metadata JSON string, defaulting to empty dict.")
+                    metadata = {}
 
             signal = Signal(
                 symbol=signal_data['symbol'],
@@ -256,25 +261,33 @@ class DatabaseManager:
                 entry_price=signal_data['entry'],
                 tp_price=signal_data['tp'],
                 sl_price=signal_data['sl'],
-                liquidation_price=signal_data.get('liquidation'),
+                liquidation_price=signal_data.get('liquidation'),  # can be None
                 confidence=signal_data['confidence'],
                 score=signal_data['score'],
-                rsi=signal_data.get('rsi'),
+                rsi=signal_data.get('rsi'),  # can be list or None
                 macd_hist=signal_data.get('macd_hist'),
                 bb_breakout=signal_data.get('bb_breakout'),
                 trend=signal_data.get('trend'),
                 regime=signal_data.get('regime'),
                 vol_spike=signal_data.get('vol_spike', False),
-                signal_metadata=signal_data.get('metadata', {})  # ← now guaranteed to be a dict
+                signal_metadata=metadata
             )
+
             session.add(signal)
             session.commit()
-            self.logger.info(f"Signal added: {signal_data['symbol']} - {signal_data['strategy']}")
+            self.logger.info(f"Signal added: {signal.symbol} - {signal.strategy}")
             return True
-        except Exception as e:
-            self.logger.error(f"Error adding signal: {e}")
+
+        except SQLAlchemyError as e:
+            self.logger.error(f"SQLAlchemy error adding signal: {str(e)}", exc_info=True)
             session.rollback()
             return False
+
+        except Exception as e:
+            self.logger.error(f"Unexpected error adding signal: {str(e)}", exc_info=True)
+            session.rollback()
+            return False
+
         finally:
             session.close()
     

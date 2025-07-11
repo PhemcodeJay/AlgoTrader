@@ -21,8 +21,8 @@ class DashboardComponents:
             st.markdown(f"TP: ${signal['tp']} | SL: ${signal['sl']}")
         with col2:
             confidence_color = (
-                "green" if signal['confidence'] >= 85 else
-                "orange" if signal['confidence'] >= 75 else
+                "orange" if signal['confidence'] >= 85 else
+                "green" if signal['confidence'] >= 75 else
                 "red"
             )
             st.markdown(
