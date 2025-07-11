@@ -136,7 +136,7 @@ def calculate_drawdown(trades, starting_capital):
     return round(max_drawdown, 2)
 
 
-def get_ticker_snapshot(limit=10):
+def get_ticker_snapshot(limit=50):
         url = "https://api.binance.com/api/v3/ticker/24hr"
         try:
             data = requests.get(url).json()
