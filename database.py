@@ -150,23 +150,25 @@ class DatabaseManager:
     # Portfolio Operations
     def get_portfolio_balance(self) -> float:
         """Get current portfolio balance"""
-        session = self.get_session()
-        try:
-            portfolio = session.query(Portfolio).order_by(Portfolio.updated_at.desc()).first()
-            if portfolio:
-                return portfolio.balance
-            else:
-                # Create initial portfolio
-                initial_portfolio = Portfolio(balance=10.0)
-                session.add(initial_portfolio)
-                session.commit()
+        with self.SessionLocal() as session:
+            try:
+                # Fetch the latest portfolio entry by updated_at
+                portfolio = session.query(Portfolio).order_by(Portfolio.updated_at.desc()).first()
+                
+                if portfolio:
+                    return portfolio.balance
+                else:
+                    # Create initial balance entry if none exists
+                    initial_portfolio = Portfolio(balance=10.0)
+                    session.add(initial_portfolio)
+                    session.commit()
+                    return 10.0
+
+            except Exception as e:
+                logging.error(f"❌ Error getting portfolio balance: {e}")
+                session.rollback()
                 return 10.0
-        except Exception as e:
-            self.logger.error(f"Error getting portfolio balance: {e}")
-            session.rollback()
-            return 10.0
-        finally:
-            session.close()
+
     
     def update_portfolio_balance(self, balance: float) -> bool:
         """Update portfolio balance"""
@@ -306,7 +308,7 @@ class DatabaseManager:
 
             session.add(signal)
             session.commit()
-            self.logger.info(f"✅ Signal saved to DB: {signal.symbol} | {signal.strategy} | {signal.timeframe}")
+            self.logger.info(f"OK Signal saved to DB: {signal.symbol} | {signal.strategy} | {signal.timeframe}")
             return True
 
         except SQLAlchemyError as e:
@@ -380,39 +382,40 @@ class DatabaseManager:
     
     # Automation Stats Operations
     def get_automation_stats(self) -> dict:
-        """Get automation statistics"""
-        session = self.get_session()
-        try:
-            stats = session.query(AutomationStats).order_by(AutomationStats.last_update.desc()).first()
-            if stats:
-                return {
-                    'signals_generated': stats.signals_generated,
-                    'trades_executed': stats.trades_executed,
-                    'successful_trades': stats.successful_trades,
-                    'total_pnl': stats.total_pnl,
-                    'start_time': stats.start_time.isoformat() if stats.start_time else None,
-                    'last_update': stats.last_update.isoformat() if stats.last_update else None,
-                    'session_data': stats.session_data or {}
-                }
-            else:
-                # Create initial stats
-                initial_stats = AutomationStats()
-                session.add(initial_stats)
-                session.commit()
-                return {
-                    'signals_generated': 0,
-                    'trades_executed': 0,
-                    'successful_trades': 0,
-                    'total_pnl': 0.0,
-                    'start_time': None,
-                    'last_update': None,
-                    'session_data': {}
-                }
-        except Exception as e:
-            self.logger.error(f"Error getting automation stats: {e}")
-            return {}
-        finally:
-            session.close()
+        """Get the latest automation statistics or create defaults if none exist."""
+        with self.SessionLocal() as session:
+            try:
+                stats = session.query(AutomationStats).order_by(AutomationStats.last_update.desc()).first()
+
+                if stats:
+                    return {
+                        'signals_generated': stats.signals_generated,
+                        'trades_executed': stats.trades_executed,
+                        'successful_trades': stats.successful_trades,
+                        'total_pnl': stats.total_pnl,
+                        'start_time': stats.start_time.isoformat() if stats.start_time else None,
+                        'last_update': stats.last_update.isoformat() if stats.last_update else None,
+                        'session_data': stats.session_data or {}
+                    }
+                else:
+                    # If no stats entry exists, create one
+                    new_stats = AutomationStats()
+                    session.add(new_stats)
+                    session.commit()
+                    return {
+                        'signals_generated': 0,
+                        'trades_executed': 0,
+                        'successful_trades': 0,
+                        'total_pnl': 0.0,
+                        'start_time': None,
+                        'last_update': None,
+                        'session_data': {}
+                    }
+
+            except Exception as e:
+                logging.error(f"❌ Error getting automation stats: {e}")
+                return {}
+
     
     def update_automation_stats(self, stats_data: dict) -> bool:
         """Update automation statistics"""
@@ -438,28 +441,27 @@ class DatabaseManager:
     
     # Settings Operations
     def get_setting(self, key: str, default_value=None):
-        """Get a system setting"""
-        session = self.get_session()
+        """Retrieve a system setting from the database, with type conversion and fallback."""
         try:
-            setting = session.query(SystemSettings).filter(SystemSettings.key == key).first()
-            if setting:
-                # Convert based on data type
-                if setting.data_type == 'json':
-                    return json.loads(setting.value)
-                elif setting.data_type == 'int':
-                    return int(setting.value)
-                elif setting.data_type == 'float':
-                    return float(setting.value)
-                elif setting.data_type == 'bool':
-                    return setting.value.lower() == 'true'
-                else:
-                    return setting.value
-            return default_value
+            with self.SessionLocal() as session:
+                setting = session.query(SystemSettings).filter(SystemSettings.key == key).first()
+                if setting:
+                    value = setting.value
+                    # Type conversion based on stored data_type
+                    if setting.data_type == 'json':
+                        return json.loads(value)
+                    elif setting.data_type == 'int':
+                        return int(value)
+                    elif setting.data_type == 'float':
+                        return float(value)
+                    elif setting.data_type == 'bool':
+                        return value.lower() == 'true'
+                    return value  # default is string
+                return default_value
         except Exception as e:
-            self.logger.error(f"Error getting setting {key}: {e}")
+            logging.error(f"❌ Error retrieving setting '{key}': {e}")
             return default_value
-        finally:
-            session.close()
+
     
     def set_setting(self, key: str, value, data_type: str = 'string') -> bool:
         """Set a system setting"""
@@ -528,6 +530,12 @@ class DatabaseManager:
             
         except Exception as e:
             self.logger.error(f"Error migrating JSON data: {e}")
+            
+    def get_portfolio(self):
+        with self.SessionLocal() as session:
+            results = session.query(Portfolio).order_by(Portfolio.updated_at.desc()).limit(limit).all()
+            return [clean_record(p) for p in results]
+        
  
     
         
