@@ -52,7 +52,7 @@ def init_components():
 trading_engine, dashboard, data_provider = init_components()
 
 # Sidebar Navigation
-st.image(logo, width=150)
+st.image(logo, width=100)
 st.sidebar.title("🚀 AlgoTrader")
 st.sidebar.markdown("---")
 
@@ -104,7 +104,6 @@ except:
 
 # Main Content Area
 if page == "🏠 Dashboard":
-    st.image(logo, width=150)
     st.title("🚀 AlgoTrader")
     
     # Key Metrics Row
