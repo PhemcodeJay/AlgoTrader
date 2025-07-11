@@ -173,7 +173,7 @@ class DashboardComponents:
 
         ticker_html = " | ".join([
             f"<b>{item['symbol']}</b>: ${item['price']:,.2f} "
-            f"(<span style='color:{'green' if item['change'] > 0 else 'red'}'>{item['change']:,.2f}%</span>) "
+            f"(<span style='color:{'#00cc66' if item['change'] > 0 else '#ff4d4d'}'>{item['change']:,.2f}%</span>) "
             f"Vol: ${item['volume']:,.0f}"
             for item in ticker_data
         ])
@@ -187,7 +187,7 @@ class DashboardComponents:
                 left: 0;
                 width: 100%;
                 background-color: #111;
-                color: #FFD700;
+                color: #339CFF;
                 padding: 10px 0;
                 font-family: monospace;
                 font-size: 16px;
