@@ -187,7 +187,7 @@ class DashboardComponents:
                 left: 0;
                 width: 100%;
                 background-color: #111;
-                color: #339CFF;
+                color: #FF9933;
                 padding: 10px 0;
                 font-family: monospace;
                 font-size: 16px;
