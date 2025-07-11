@@ -10,6 +10,12 @@ from sqlalchemy.exc import SQLAlchemyError
 import json
 
 
+def clean_record(obj):
+    d = obj.__dict__.copy()
+    d.pop('_sa_instance_state', None)
+    return d
+
+
 # ✅ Get DB URL from environment or Streamlit secrets
 def get_database_url():
     # Use environment variable if it exists
@@ -93,6 +99,9 @@ class AutomationStats(Base):
     start_time = Column(DateTime, nullable=True)
     last_update = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     session_data = Column(JSON, nullable=True)
+    timestamp = Column(DateTime, default=datetime.utcnow)  # ✅ NEW: Auto-filled timestamp    
+    
+    
 
 class SystemSettings(Base):
     __tablename__ = "system_settings"
@@ -105,10 +114,24 @@ class SystemSettings(Base):
 
 # Database Operations Class
 class DatabaseManager:
-    def __init__(self):
-        self.engine = engine
-        self.SessionLocal = SessionLocal
-        self.logger = logging.getLogger(__name__)
+    
+    def __init__(self, db_url=None):
+        # ✅ Logger setup
+        self.logger = logging.getLogger("DatabaseManager")
+        self.logger.setLevel(logging.INFO)
+        handler = logging.StreamHandler()
+        handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+        self.logger.addHandler(handler)
+
+        self.db_url = db_url or os.getenv("DATABASE_URL") or st.secrets.get("DATABASE_URL")
+        if not self.db_url:
+            raise ValueError("DATABASE_URL is not set in environment or Streamlit secrets")
+
+        self.engine = create_engine(self.db_url, echo=False)
+        self.Session = sessionmaker(bind=self.engine)
+        self.SessionLocal = sessionmaker(bind=self.engine)
+        Base.metadata.create_all(self.engine)
+
         
     def create_tables(self):
         """Create all database tables"""
@@ -122,6 +145,7 @@ class DatabaseManager:
     def get_session(self) -> Session:
         """Get a database session"""
         return self.SessionLocal()
+        
     
     # Portfolio Operations
     def get_portfolio_balance(self) -> float:
@@ -504,6 +528,9 @@ class DatabaseManager:
             
         except Exception as e:
             self.logger.error(f"Error migrating JSON data: {e}")
+ 
+    
+        
 
 # Global database manager instance
 db_manager = DatabaseManager()
