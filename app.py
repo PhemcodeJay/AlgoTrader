@@ -830,7 +830,7 @@ elif page == "⚙️ Settings":
 
 # Auto refresh functionality
 if auto_refresh:
-    time.sleep(60)
+    time.sleep(900)
     st.rerun()
     
 def main():
