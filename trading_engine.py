@@ -450,7 +450,7 @@ class TradingEngine:
         try:
             reddit = praw.Reddit(**self.REDDIT_CREDS)
             subreddit = reddit.subreddit(os.getenv("REDDIT_SUBREDDIT", "YourSubreddit"))
-            title = f"CryptoPilot Signal - {signal['symbol']} {signal['side']}"
+            title = f"AlgoTrader Signal - {signal['symbol']} {signal['side']}"
             body = self.format_signal_message(signal)
             subreddit.submit(title, selftext=body)
         except Exception as e:
