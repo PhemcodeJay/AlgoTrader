@@ -832,3 +832,6 @@ elif page == "⚙️ Settings":
 if auto_refresh:
     time.sleep(60)
     st.rerun()
+if __name__ == "__main__":
+    print("✅ Streamlit AlgoTrader app started...")
+    main()
