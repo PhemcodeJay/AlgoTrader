@@ -351,7 +351,7 @@ elif page == "📈 Charts":
             st.error(f"Failed to load data for {selected_symbol}")
 
 elif page == "🤖 Automation":
-    st.title("🤖 Trading System")
+    st.title("🤖 AlgoTrading System")
     
     # Get automation status
     automation_status = automated_trader.get_automation_status()
@@ -534,7 +534,7 @@ elif page == "🤖 Automation":
                 st.info(f"Next Signal Generation: {next_gen.strftime('%Y-%m-%d %H:%M:%S')}")
 
 elif page == "🗄️ Database":
-    st.title("🗄️ Records")
+    st.title("🗄️ Trade Journal")
     
     # Database Status
     col1, col2, col3 = st.columns(3)
