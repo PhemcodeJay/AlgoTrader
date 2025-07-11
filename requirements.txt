@@ -1,12 +1,23 @@
+# Core UI & App
 streamlit
 python-dotenv
 requests
 pandas
 matplotlib
 plotly
-yfinance
-praw
+fpdf
 pdfkit
+Pillow
+
+# Market Data
+yfinance
+
+# Bybit SDK
+pybit
+
+# Reddit API
+praw
+
+# Database
 sqlalchemy
 psycopg2-binary
-fpdf
