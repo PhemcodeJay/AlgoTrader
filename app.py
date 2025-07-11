@@ -18,9 +18,14 @@ from database import db_manager
 from dashboard_components import DashboardComponents
 from utils import get_ticker_snapshot
 from streamlit_autorefresh import st_autorefresh
+from PIL import Image
+
 
 # Refresh every 30 seconds (30000 milliseconds)
 st_autorefresh(interval=30000, limit=None, key="tickerrefresh")
+
+# Load the logo image
+logo = Image.open("logo.png")
 
 
 dashboard = DashboardComponents()
@@ -47,6 +52,7 @@ def init_components():
 trading_engine, dashboard, data_provider = init_components()
 
 # Sidebar Navigation
+st.image(logo, width=150)
 st.sidebar.title("🚀 AlgoTrader")
 st.sidebar.markdown("---")
 
@@ -98,6 +104,7 @@ except:
 
 # Main Content Area
 if page == "🏠 Dashboard":
+    st.image(logo, width=150)
     st.title("🚀 AlgoTrader")
     
     # Key Metrics Row

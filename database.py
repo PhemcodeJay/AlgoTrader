@@ -243,6 +243,11 @@ class DatabaseManager:
         """Add a new signal to the database"""
         session = self.get_session()
         try:
+            # Ensure metadata is a Python dict
+            if isinstance(signal_data.get('metadata'), str):
+                import json
+                signal_data['metadata'] = json.loads(signal_data['metadata'])
+
             signal = Signal(
                 symbol=signal_data['symbol'],
                 side=signal_data['side'],
@@ -260,7 +265,7 @@ class DatabaseManager:
                 trend=signal_data.get('trend'),
                 regime=signal_data.get('regime'),
                 vol_spike=signal_data.get('vol_spike', False),
-                signal_metadata=signal_data.get('metadata', {})
+                signal_metadata=signal_data.get('metadata', {})  # ← now guaranteed to be a dict
             )
             session.add(signal)
             session.commit()
