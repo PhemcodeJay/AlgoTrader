@@ -783,10 +783,8 @@ elif page == "⚙️ Settings":
             "RISK_PER_TRADE": risk_per_trade / 100
         })
 
-         # Toggle real trading (Bybit)
-        real_mode = st.checkbox("✅ Enable Real Bybit Trading", value=os.getenv("USE_REAL_TRADING", "false") == "true")
-        os.environ["USE_REAL_TRADING"] = str(real_mode).lower()
-        db_manager.set_setting("real_trading", real_mode, "bool")  # Optional: persist in DB   
+        # Toggle real trading (Bybit)
+        real_mode = dashboard.render_real_mode_toggle()
 
         
         # Update environment variables
@@ -830,6 +828,6 @@ elif page == "⚙️ Settings":
 
 # Auto refresh functionality
 if auto_refresh:
-    time.sleep(900)
+    time.sleep(300)
     st.rerun()
     
