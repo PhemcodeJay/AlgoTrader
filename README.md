@@ -1,177 +1,191 @@
-# 🚀 AlgoTrader - Automated Trading Dashboard
+Here is a **combined and production-ready README** file for your **AlgoTrader** project, merging all the technical details, modules, and architecture in a clear and maintainable format:
 
-A comprehensive cryptocurrency trading system with automated signal generation, portfolio management, and real-time monitoring.
+---
 
-## Features
+# 🚀 AlgoTrader: Streamlit-Based Crypto Trading Dashboard
 
-### 📊 Dashboard
-- Real-time portfolio monitoring
-- Trading signals display
-- Portfolio performance charts
-- Automated Trading System
+**AlgoTrader** is a full-stack algorithmic crypto trading platform built with **Streamlit**, integrating real-time market data, trading automation, signal generation, portfolio analytics, and social media export. It supports both **Virtual** and **Real (Bybit)** trading modes with robust risk management and modular architecture.
 
-### 🤖 Automated Trading
-- **Automated Signal Generation**: Generate trading signals every 5 minutes
-- **Risk Management**: Built-in stop-loss, take-profit, and position sizing
-- **Trade Execution**: Automatic trade simulation with P&L tracking
-- **Social Media Integration**: Post signals to Discord and Reddit
-- **Comprehensive Logging**: Full audit trail of all activities
+---
 
-### 📈 Technical Analysis
-- Multiple timeframe analysis (15m, 1h, 4h)
-- Technical indicators: EMA, SMA, RSI, MACD, Bollinger Bands
-- Market trend detection across timeframes
-- Volume analysis and breakout detection
+## 📐 Architecture Overview
 
-### 💼 Portfolio Management
-- Starting capital: $10.00
-- Risk per trade: 2% of portfolio
-- Maximum daily loss limit: 15%
-- Leverage: 20x
-- Take Profit: 25% | Stop Loss: 10%
+### 🖥️ Frontend
 
-## Quick Start
-INSTALL PYTHON AND ALL MODULES IN REQUIREMENTS.TXT
+* **Framework**: Streamlit
+* **Charts**: Plotly
+* **UI Components**: Modular components for dashboard views
+* **Layout**: Sidebar navigation with pages: Dashboard, Signals, Portfolio, Charts, Automation, Database, Settings
 
-### 1. Start the Dashboard
-```bash
-streamlit run app.py --server.port 5000
+### ⚙️ Backend
 
-python -m streamlit run app.py
-```
+* **Trading Engine**: Core logic for trade simulation & live execution (Bybit)
+* **Data Provider**: Binance Futures API for real-time OHLCV & symbol info
+* **Automation Engine**: Background trading automation with threading
+* **Database**: PostgreSQL + SQLAlchemy ORM
+* **Virtual/Real Mode Toggle**: Seamless switching for simulation and live trading
+* **Social Sharing**: Discord Webhook & Reddit integration
 
-### 2. Start Automated Trading (Optional)
-```bash
-python start_automation.py
+---
 
-press the button on the dashboard
-```
+## 🔑 Key Features
 
-### 3. Access the Application
-Open your browser and navigate to: `http://localhost:5000`
+| Feature                    | Description                                        |
+| -------------------------- | -------------------------------------------------- |
+| 📈 Signal Generation       | Technical analysis + confidence scoring            |
+| 🤖 Auto Trading            | Optional automation every 5–15 minutes             |
+| 💼 Virtual & Real Mode     | Toggle between simulation & live trading via Bybit |
+| 💬 Social Media Export     | Signal sharing to Discord and Reddit               |
+| 📊 Portfolio Analytics     | P\&L tracking, win rate, drawdowns                 |
+| 🔒 Risk Management         | Capital protection, drawdown, max trade/day        |
+| 📄 PDF Reports             | Auto-generated trade summaries                     |
+| 🧠 Configurable Strategies | EMA, RSI, MACD, Bollinger, trend filters           |
 
-## Navigation
+---
 
-- **🏠 Dashboard**: Overview of portfolio and recent signals
-- **📊 Signals**: Generate and view trading signals
-- **💼 Portfolio**: Performance tracking and trade history
-- **📈 Charts**: Technical analysis and charting
-- **🤖 Automation**: Automated trading controls and settings
-- **⚙️ Settings**: System configuration and API keys
-
-## Automation Settings
-
-### Signal Generation
-- **Interval**: 1-60 minutes (default: 5 minutes)
-- **Min Confidence**: 50-95% (default: 75%)
-- **Max Signals per Cycle**: 1-10 (default: 5)
-
-### Risk Management
-- **Trade Execution**: Enable/disable automatic trading
-- **Max Daily Trades**: 1-50 (default: 20)
-- **Max Position Size**: 0.5-20% of portfolio (default: 5%)
-- **Max Drawdown Limit**: 5-50% (default: 20%)
-
-## Data Sources
-
-- **Primary**: Binance Futures API for real-time market data
-- **Fallback**: Mock data for demonstration when API is unavailable
-
-## File Structure
+## 🧱 File Structure
 
 ```
 /
-├── app.py                    # Main Streamlit dashboard
-├── automated_trader.py       # Automation engine
-├── trading_engine.py         # Core trading logic
-├── dashboard_components.py   # UI components
-├── data_provider.py          # Market data integration
-├── utils.py                 # Helper functions
-├── start_automation.py       # Automation starter script
-├── automation_settings.json # Automation configuration
-├── capital.json             # Portfolio balance (auto-generated)
-├── trades_history.json      # Trade log (auto-generated)
-├── automated_trader.log     # Automation logs (auto-generated)
-├── signals/                 # Generated signals (auto-generated)
-└── trades/                  # Trade records (auto-generated)
+├── app.py                    # Main dashboard entry point
+├── trading_engine.py         # Signal logic, trade execution, capital logic
+├── dashboard_components.py   # UI: charts, tables, metric cards
+├── data_provider.py          # Binance Futures data fetcher
+├── utils.py                  # Formatters & helpers
+├── database.py               # PostgreSQL ORM & models
+├── automated_trader.py       # Automation thread & signal executor
+├── start_automation.py       # CLI entry for automation engine
+├── automated_trader.log      # Automation runtime logs
+├── signals/                  # Archived signal data
+├── trades/                   # Archived trade logs
 ```
 
-## Environment Variables (Optional)
+---
 
-For social media integration, set these environment variables:
+## ⚙️ Trading Configuration
+
+| Setting             | Value          |
+| ------------------- | -------------- |
+| Starting Capital    | `$10.00`       |
+| Risk Per Trade      | `2%`           |
+| Leverage            | `20x`          |
+| Max Daily Trades    | `50`           |
+| Stop Loss           | `10%`          |
+| Take Profit         | `25%`          |
+| Max Drawdown        | `20%`          |
+| Automation Interval | `5–15 minutes` |
+
+---
+
+## 🔌 External Integrations
+
+### ✅ APIs
+
+* **Binance Futures** – OHLCV & symbol data
+* **Bybit** – Live trade execution (Real Mode)
+* **Discord Webhooks** – Signal posting
+* **Reddit (Snoowrap)** – Signal sharing
+
+### 🔐 Environment Variables
+
+Set these in `.env` or Streamlit secrets:
+
+```env
+BYBIT_API_KEY=
+BYBIT_API_SECRET=
+DISCORD_WEBHOOK_URL=
+REDDIT_CLIENT_ID=
+REDDIT_CLIENT_SECRET=
+REDDIT_USERNAME=
+REDDIT_PASSWORD=
+```
+
+---
+
+## 🛠️ Setup & Run
+
+### 1. Install Dependencies
 
 ```bash
-# Discord Integration
-export DISCORD_WEBHOOK_URL="your_discord_webhook_url"
-
-# Reddit Integration
-export REDDIT_CLIENT_ID="your_reddit_client_id"
-export REDDIT_CLIENT_SECRET="your_reddit_client_secret"
-export REDDIT_USERNAME="your_reddit_username"
-export REDDIT_PASSWORD="your_reddit_password"
+pip install -r requirements.txt
 ```
 
-## Safety Features
+### 2. Start Streamlit Dashboard
 
-- **Daily Loss Limits**: Trading automatically pauses if daily losses exceed 15%
-- **Drawdown Protection**: Trading stops if portfolio drawdown exceeds the set limit
-- **Position Size Limits**: Maximum 5% of portfolio per trade
-- **Confidence Filtering**: Only trade signals with 75%+ confidence
-- **Comprehensive Logging**: All activities are logged for audit and analysis
+```bash
+streamlit run app.py
+```
 
-## Trading Strategies
+### 3. Start Automation (optional)
 
-### 1. Trend Following
-- Uses EMA crossovers and trend detection
-- Confidence: 90%
-- Best for: Strong trending markets
+```bash
+python start_automation.py
+```
 
-### 2. Mean Reversion
-- RSI oversold/overbought conditions
-- Bollinger Band reversals
-- Confidence: 85%
-- Best for: Ranging markets
+---
 
-### 3. Scalping
-- Volume breakouts and momentum
-- Quick entries and exits
-- Confidence: 80%
-- Best for: High volatility periods
+## 🧪 Toggle Trading Modes
 
-### 4. Short Reversal
-- Overbought conditions with volume
-- Counter-trend positions
-- Confidence: 75%
-- Best for: Market tops and corrections
+Inside the dashboard, use the **"⚙️ Select Trade Mode"** radio button to switch between:
 
-## Monitoring and Control
+* 🧪 **Virtual**: Simulates trades, logs to DB, no API calls
+* 🔴 **Real**: Sends real market orders to Bybit via API
 
-### Dashboard Monitoring
-- Real-time portfolio balance
-- Daily P&L tracking
-- Win rate statistics
-- Trade execution status
+The backend automatically adjusts trade routing based on this setting.
 
-### Automation Control
-- Start/stop automation with one click
-- Force signal generation
-- View real-time logs
-- Adjust settings on-the-fly
+---
 
-### Performance Analytics
-- Portfolio performance charts
-- Trade statistics and win rates
-- Drawdown analysis
-- Signal effectiveness tracking
+## 📊 Dashboard Tabs
 
-## Support
+| Tab            | Description                                        |
+| -------------- | -------------------------------------------------- |
+| **Dashboard**  | Overview, trade mode, ticker, signal metrics       |
+| **Signals**    | Ranked trade ideas with confidence & strategy info |
+| **Portfolio**  | Trade history, stats, P\&L, drawdown               |
+| **Charts**     | Technical analysis per symbol                      |
+| **Automation** | Start/Stop background trading                      |
+| **Database**   | Sync/migrate legacy files to PostgreSQL            |
+| **Settings**   | Configure thresholds, capital, risk                |
 
-The system includes comprehensive error handling and logging. Check the following for troubleshooting:
+---
 
-1. **Dashboard**: Error messages and status indicators
-2. **Logs**: `automated_trader.log` for detailed activity logs
-3. **Settings**: Verify API configurations and risk parameters
+## 📌 Tech Stack
 
-## Disclaimer
+| Layer        | Technology                              |
+| ------------ | --------------------------------------- |
+| Frontend     | Streamlit + Plotly + Pandas             |
+| Backend      | Python + threading + Bybit SDK          |
+| Database     | PostgreSQL + SQLAlchemy ORM             |
+| External API | Binance Futures, Bybit, Discord, Reddit |
 
-This is a trading simulation system for educational purposes. All trades are simulated and no real money is involved. Past performance does not guarantee future results. Always conduct your own research before making any trading decisions.
+---
+
+## 🧩 Modular Design
+
+Each part of AlgoTrader is decoupled and testable:
+
+* Switch from Binance to any exchange (via DataProvider)
+* Swap Bybit for Alpaca, Binance, etc.
+* Add new strategy modules inside `trading_engine.py`
+
+---
+
+## ✅ Recent Updates (July 2025)
+
+* ✅ Full support for PostgreSQL
+* ✅ Toggle between Real/Virtual trading
+* ✅ Discord and Reddit exports
+* ✅ Technical chart overlays (EMA, BB, RSI)
+* ✅ Performance charts and metrics
+* ✅ Risk management system (drawdown, max trades)
+* ✅ Threaded automation engine
+
+---
+
+## 📎 License & Disclaimer
+
+This is an open-source educational tool for developing algorithmic trading strategies.
+
+⚠️ **Disclaimer**: Use at your own risk. Real-money trading involves risk. This tool is for informational and development purposes only.
+
+---

@@ -15,7 +15,6 @@ from data_provider import DataProvider
 from utils import format_currency, format_percentage, get_status_color
 from automated_trader import automated_trader
 from database import db_manager
-from dashboard_components import DashboardComponents
 from utils import get_ticker_snapshot
 from streamlit_autorefresh import st_autorefresh
 from PIL import Image
@@ -53,7 +52,7 @@ trading_engine, dashboard, data_provider = init_components()
 
 # Sidebar Navigation
 st.image(logo, width=100)
-st.sidebar.title("🚀 AlgoTrader")
+st.sidebar.title("AlgoTrader")
 st.sidebar.markdown("---")
 
 page = st.sidebar.selectbox(
@@ -783,6 +782,12 @@ elif page == "⚙️ Settings":
             "LEVERAGE": new_leverage,
             "RISK_PER_TRADE": risk_per_trade / 100
         })
+
+         # Toggle real trading (Bybit)
+        real_mode = st.checkbox("✅ Enable Real Bybit Trading", value=os.getenv("USE_REAL_TRADING", "false") == "true")
+        os.environ["USE_REAL_TRADING"] = str(real_mode).lower()
+        db_manager.set_setting("real_trading", real_mode, "bool")  # Optional: persist in DB   
+
         
         # Update environment variables
         if discord_webhook:

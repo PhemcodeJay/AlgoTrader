@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 from fpdf import FPDF
 import praw
 from database import db_manager
+from bybit_client import BybitClient
 
 class TradingEngine:
     def __init__(self):
@@ -21,6 +22,8 @@ class TradingEngine:
         self.SL_PERCENT = 0.10
         self.LEVERAGE = 20
         self.RISK_PER_TRADE = 0.02  # 2% risk per trade
+        self.use_real_trading = os.getenv("USE_REAL_TRADING", "false").lower() == "true"
+        self.bybit_client = BybitClient()
         
         # Create directories
         for d in [self.SIGNAL_DIR, self.TRADE_DIR]:
@@ -456,10 +459,10 @@ class TradingEngine:
     def format_signal_message(self, signal):
         """Format signal for social media posting"""
         return f"""📈 {signal['symbol']} [{signal['side']}] | {signal['strategy']}
-Entry: {signal['entry']} | TP: {signal['tp']} | SL: {signal['sl']}
-Confidence: {signal['confidence']}% | Score: {signal['score']}
-Regime: {signal['regime']} | Trend: {signal['trend']}
-Timestamp: {signal['timestamp']}"""
+            Entry: {signal['entry']} | TP: {signal['tp']} | SL: {signal['sl']}
+            Confidence: {signal['confidence']}% | Score: {signal['score']}
+            Regime: {signal['regime']} | Trend: {signal['trend']}
+            Timestamp: {signal['timestamp']}"""
     
     def export_signals_pdf(self, signals):
         """Export signals to PDF in a more human-readable format"""
@@ -506,3 +509,25 @@ Timestamp: {signal['timestamp']}"""
         self.SL_PERCENT = 0.10
         self.LEVERAGE = 20
         self.RISK_PER_TRADE = 0.02
+
+    def execute_trade(self, signal):
+        entry, tp, sl = signal['entry'], signal['tp'], signal['sl']
+        side = signal['side']
+        capital = self.load_capital()
+        
+        risk_amount = capital * self.RISK_PER_TRADE
+        risk_per_unit = abs(entry - sl)
+        qty = round(risk_amount / risk_per_unit, 4) if risk_per_unit else 0
+
+        if self.use_real_trading:
+            result = self.bybit_client.place_order(
+                symbol=signal['symbol'],
+                side=side.upper(),
+                qty=qty,
+                entry_price=entry,
+                sl=sl,
+                tp=tp
+            )
+            if not result:
+                print("Real trade failed. Aborting.")
+                return None
