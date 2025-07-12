@@ -109,15 +109,22 @@ REDDIT_PASSWORD=
 ```bash
 pip install -r requirements.txt
 ```
-Install POSTGRESQL and run python database.py
+
+### 1. Install PostgreSQL
+
+```bash
+create a new database named "Algotrader"
+'''
 
 ### 2. Start Streamlit Dashboard
 
 ```bash
-streamlit run app.py
+streamlit run app.py 
+or 
+python -m streamlit run app.py
 ```
 
-### 3. Start Automation (optional)
+### 3. Start Automation (optional) can use dashboard button
 
 ```bash
 python start_automation.py

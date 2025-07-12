@@ -16,8 +16,10 @@ pdfkit
 # Market Data
 yfinance
 
+
 # Bybit SDK
 pybit
+bybit
 
 # Reddit API
 praw

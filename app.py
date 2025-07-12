@@ -18,6 +18,7 @@ from database import db_manager
 from utils import get_ticker_snapshot
 from streamlit_autorefresh import st_autorefresh
 from PIL import Image
+import urllib3
 
 
 # Refresh every 30 seconds (30000 milliseconds)
@@ -421,8 +422,8 @@ elif page == "🤖 Automation":
         signal_interval = st.slider(
             "Signal Generation Interval (minutes)",
             min_value=5,
-            max_value=3600,
-            value=automation_status['settings']['signal_interval'] // 3600,
+            max_value=120,
+            value=automation_status['settings']['signal_interval'] // 120,
             help="How often to generate new signals"
         )
         

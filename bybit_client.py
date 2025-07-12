@@ -4,14 +4,14 @@ import os
 
 class BybitClient:
     def __init__(self):
-        self.use_real = os.getenv("USE_REAL_TRADING", "false").lower() == "true"
+        self.use_real = os.getenv("USE_REAL_TRADING", "true").lower() == "true"
         self.session = HTTP(
             api_key=os.getenv("BYBIT_API_KEY"),
             api_secret=os.getenv("BYBIT_API_SECRET"),
             testnet=not self.use_real
         )
 
-        mode = "REAL MODE" if self.use_real else "TESTNET MODE"
+        mode = "LIVE TRADING MODE" if self.use_real else "TESTNET MODE"
         print(f"[BybitClient] Initialized in {mode}")
 
     def place_order(self, symbol, side, qty, entry_price=None, sl=None, tp=None):

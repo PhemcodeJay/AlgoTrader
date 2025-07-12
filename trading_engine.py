@@ -359,7 +359,7 @@ class TradingEngine:
         if ma20 and ma200 and ma20[-1] and ma200[-1]:
             if ma20[-1] > ma200[-1]:
                 regime = "trend"
-            elif rsi < 35 or rsi > 65:
+            elif rsi[-1] < 35 or rsi[-1] > 65:
                 regime = "mean_reversion"
             else:
                 regime = "scalp"
@@ -376,7 +376,7 @@ class TradingEngine:
                 signals.append(sig)
         
         if regime == "mean_reversion":
-            condition = rsi < 40 or (ma20 and ma20[-1] and close < ma20[-1])
+            condition = rsi[-1] < 40 or (ma20 and ma20[-1] and close < ma20[-1])
             sig = self.build_signal("Mean-Reversion", condition, 85, regime, trend_info,
                                   close, symbol, tf, rsi, macd_hist, bb_upper, bb_lower, volumes)
             if sig:
@@ -391,11 +391,11 @@ class TradingEngine:
         if rsi[-1] > 65 and bb_upper and bb_upper[-1] and close > bb_upper[-1]:
             sig = self.build_signal("Short Reversal", True, 75, "reversal", trend_info,
                                 close, symbol, tf, rsi, macd_hist, bb_upper, bb_lower, volumes)
-        if sig:
-            signals.append(sig)
+            if sig:
+                signals.append(sig)
 
-        
         return signals
+
     
     def simulate_trade(self, signal):
         """Simulate executing a trade"""
