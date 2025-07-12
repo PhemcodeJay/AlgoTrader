@@ -109,6 +109,7 @@ REDDIT_PASSWORD=
 ```bash
 pip install -r requirements.txt
 ```
+Install POSTGRESQL and run python database.py
 
 ### 2. Start Streamlit Dashboard
 
