@@ -52,7 +52,7 @@ def init_components():
 trading_engine, dashboard, data_provider = init_components()
 
 # Sidebar Navigation
-st.image(logo, width=50)
+st.image(logo, width=40)
 st.sidebar.title("🚀 AlgoTrader")
 st.sidebar.markdown("---")
 
@@ -182,7 +182,7 @@ elif page == "📊 Signals":
         confidence_threshold = st.slider("Min Confidence %", min_value=50, max_value=95, value=75)
     
     with col3:
-        if st.button("🔍 Scan New Signals", type="primary"):
+        if st.button("🔍 Scan New Signals", type="secondary"):
             with st.spinner("Analyzing markets..."):
                 signals = trading_engine.generate_signals(symbol_limit, confidence_threshold)
                 st.success(f"Generated {len(signals)} signals")
@@ -422,8 +422,8 @@ elif page == "🤖 Automation":
         signal_interval = st.slider(
             "Signal Generation Interval (minutes)",
             min_value=5,
-            max_value=120,
-            value=automation_status['settings']['signal_interval'] // 120,
+            max_value=60,
+            value=automation_status['settings']['signal_interval'] // 60,
             help="How often to generate new signals"
         )
         
@@ -480,7 +480,7 @@ elif page == "🤖 Automation":
 
     
     # Save Settings Button
-    if st.button("💾 Save Automation Settings", type="primary"):
+    if st.button("💾 Save Automation Settings", type="secondary"):
         new_settings = {
             'signal_interval': signal_interval * 60,  # Convert to seconds
             'trade_execution': trade_execution,
@@ -744,7 +744,7 @@ elif page == "⚙️ Settings":
         new_tp_percent = st.slider(
             "Take Profit %",
             min_value=0.1,
-            max_value=2.0,
+            max_value=5.0,
             value=trading_engine.TP_PERCENT * 100,
             step=0.1
         ) / 100
@@ -752,7 +752,7 @@ elif page == "⚙️ Settings":
         new_sl_percent = st.slider(
             "Stop Loss %",
             min_value=0.05,
-            max_value=1.0,
+            max_value=2.0,
             value=trading_engine.SL_PERCENT * 100,
             step=0.05
         ) / 100
